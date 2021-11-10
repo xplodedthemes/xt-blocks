@@ -1,11 +1,11 @@
 /*!
-	autosize 4.XplodedThemes.4
+	autosize 4.0.4
 	license: MIT
 	http://www.jacklmoore.com/autosize
 */
 
 /*!
-  Copyright (c) 2XplodedThemes18 Jed Watson.
+  Copyright (c) 2018 Jed Watson.
   Licensed under the MIT License (MIT), see
   http://jedwatson.github.io/classnames
 */

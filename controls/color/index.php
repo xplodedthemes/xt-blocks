@@ -2,7 +2,7 @@
 /**
  * Color Control.
  *
- * @package lazyblocks
+ * @package xtblocks
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -10,17 +10,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * LazyBlocks_Control_Color class.
+ * XT_Blocks_Control_Color class.
  */
-class LazyBlocks_Control_Color extends LazyBlocks_Control {
+class XT_Blocks_Control_Color extends XT_Blocks_Control {
     /**
      * Constructor
      */
     public function __construct() {
         $this->name       = 'color';
-        $this->icon       = '<svg width="24" height="24" viewBox="XplodedThemes XplodedThemes 24 24" fill="none" xmlns="http://www.w3.org/2XplodedThemesXplodedThemesXplodedThemes/svg"><path d="M17.44XplodedThemes5 13.9XplodedThemes48C17.44XplodedThemes5 16.8569 15.XplodedThemes473 19.25 12.XplodedThemes952 19.25C9.14314 19.25 6.75 16.8569 6.75 13.9XplodedThemes48C6.75 13.2532 7.XplodedThemes5742 12.3484 7.61616 11.2861C8.16265 1XplodedThemes.2472 8.89988 9.14863 9.65XplodedThemes11 8.13668C1XplodedThemes.3983 7.12748 11.1482 6.21939 11.7119 5.56279C11.8524 5.3991 11.9812 5.25128 12.XplodedThemes952 5.12167C12.2XplodedThemes93 5.25128 12.338 5.3991 12.4786 5.56279C13.XplodedThemes423 6.21939 13.7922 7.12748 14.54XplodedThemes4 8.13668C15.29XplodedThemes6 9.14863 16.XplodedThemes278 1XplodedThemes.2472 16.5743 11.2861C17.1331 12.3484 17.44XplodedThemes5 13.2532 17.44XplodedThemes5 13.9XplodedThemes48Z" stroke="currentColor" stroke-width="1.5"/></svg>';
+        $this->icon       = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M17.4405 13.9048C17.4405 16.8569 15.0473 19.25 12.0952 19.25C9.14314 19.25 6.75 16.8569 6.75 13.9048C6.75 13.2532 7.05742 12.3484 7.61616 11.2861C8.16265 10.2472 8.89988 9.14863 9.65011 8.13668C10.3983 7.12748 11.1482 6.21939 11.7119 5.56279C11.8524 5.3991 11.9812 5.25128 12.0952 5.12167C12.2093 5.25128 12.338 5.3991 12.4786 5.56279C13.0423 6.21939 13.7922 7.12748 14.5404 8.13668C15.2906 9.14863 16.0278 10.2472 16.5743 11.2861C17.1331 12.3484 17.4405 13.2532 17.4405 13.9048Z" stroke="currentColor" stroke-width="1.5"/></svg>';
         $this->type       = 'string';
-        $this->label      = __( 'Color Picker', 'lazy-blocks' );
+        $this->label      = __( 'Color Picker', 'xt-blocks' );
         $this->category   = 'advanced';
         $this->attributes = array(
             'alpha'         => 'false',
@@ -28,8 +28,8 @@ class LazyBlocks_Control_Color extends LazyBlocks_Control {
         );
 
         // Filters.
-        add_filter( 'lzb/block_render/attributes', array( $this, 'filter_lzb_block_render_attributes' ), 1XplodedThemes, 3 );
-        add_filter( 'lzb/get_meta', array( $this, 'filter_get_lzb_meta_json' ), 1XplodedThemes, 4 );
+        add_filter( 'xtb/block_render/attributes', array( $this, 'filter_xtb_block_render_attributes' ), 10, 3 );
+        add_filter( 'xtb/get_meta', array( $this, 'filter_get_xtb_meta_json' ), 10, 4 );
 
         parent::__construct();
     }
@@ -39,8 +39,8 @@ class LazyBlocks_Control_Color extends LazyBlocks_Control {
      */
     public function register_assets() {
         wp_register_script(
-            'lazyblocks-control-color',
-            lazyblocks()->plugin_url() . 'controls/color/script.min.js',
+            'xtblocks-control-color',
+            xtblocks()->plugin_url() . 'controls/color/script.min.js',
             array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-components' ),
             '2.5.1',
             true
@@ -53,7 +53,7 @@ class LazyBlocks_Control_Color extends LazyBlocks_Control {
      * @return array script dependencies.
      */
     public function get_script_depends() {
-        return array( 'lazyblocks-control-color' );
+        return array( 'xtblocks-control-color' );
     }
 
     /**
@@ -68,7 +68,7 @@ class LazyBlocks_Control_Color extends LazyBlocks_Control {
         $slug          = '';
 
         if ( ! empty( $color_palette ) ) {
-            $color_palette    = $color_palette[XplodedThemes];
+            $color_palette    = $color_palette[0];
             $palette_reversed = wp_list_pluck( $color_palette, 'slug', 'color' );
 
             if ( isset( $palette_reversed[ $color ] ) ) {
@@ -120,7 +120,7 @@ class LazyBlocks_Control_Color extends LazyBlocks_Control {
      *
      * @return array filtered attribute data.
      */
-    public function filter_lzb_block_render_attributes( $attributes, $content, $block ) {
+    public function filter_xtb_block_render_attributes( $attributes, $content, $block ) {
         if ( ! isset( $block['controls'] ) || empty( $block['controls'] ) ) {
             return $attributes;
         }
@@ -141,7 +141,7 @@ class LazyBlocks_Control_Color extends LazyBlocks_Control {
     }
 
     /**
-     * Change get_lzb_meta output to custom output if needed.
+     * Change get_xtb_meta output to custom output if needed.
      *
      * @param string $result - meta data.
      * @param string $name - meta name.
@@ -150,7 +150,7 @@ class LazyBlocks_Control_Color extends LazyBlocks_Control {
      *
      * @return array filtered meta.
      */
-    public function filter_get_lzb_meta_json( $result, $name, $id, $control ) {
+    public function filter_get_xtb_meta_json( $result, $name, $id, $control ) {
         if ( ! $control || $this->name !== $control['type'] ) {
             return $result;
         }
@@ -168,4 +168,4 @@ class LazyBlocks_Control_Color extends LazyBlocks_Control {
     }
 }
 
-new LazyBlocks_Control_Color();
+new XT_Blocks_Control_Color();

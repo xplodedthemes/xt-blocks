@@ -9,7 +9,7 @@
  * @author    fzerorubigd <fzerorubigd@gmail.com>
  * @author    Behrooz Shabani <everplays@gmail.com>
  * @author    Dmitriy Simushev <simushevds@gmail.com>
- * @copyright 2XplodedThemes13 Authors
+ * @copyright 2013 Authors
  * @license   MIT <http://opensource.org/licenses/MIT>
  * @version   GIT: $Id$
  * @link      http://xamin.ir
@@ -23,7 +23,7 @@ namespace Handlebars;
  * @category  Xamin
  * @package   Handlebars
  * @author    fzerorubigd <fzerorubigd@gmail.com>
- * @copyright 2XplodedThemes13 Authors
+ * @copyright 2013 Authors
  * @license   MIT <http://opensource.org/licenses/MIT>
  * @version   Release: @package_version@
  * @link      http://xamin.ir

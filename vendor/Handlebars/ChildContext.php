@@ -13,10 +13,10 @@
  * @author    Ulrik Lystbaek <ulrik@bettertaste.dk>
  * @author    Dmitriy Simushev <simushevds@gmail.com>
  * @author    Christian Blanquera <cblanquera@openovate.com>
- * @copyright 2XplodedThemes1XplodedThemes-2XplodedThemes12 (c) Justin Hileman
- * @copyright 2XplodedThemes12 (c) ParsPooyesh Co
- * @copyright 2XplodedThemes13 (c) Behrooz Shabani
- * @copyright 2XplodedThemes13 (c) fXplodedThemesruD A
+ * @copyright 2010-2012 (c) Justin Hileman
+ * @copyright 2012 (c) ParsPooyesh Co
+ * @copyright 2013 (c) Behrooz Shabani
+ * @copyright 2013 (c) f0ruD A
  * @license   MIT <http://opensource.org/licenses/MIT>
  * @version   GIT: $Id$
  * @link      http://xamin.ir
@@ -32,8 +32,8 @@ namespace Handlebars;
  * @package   Handlebars
  * @author    fzerorubigd <fzerorubigd@gmail.com>
  * @author    Behrooz Shabani <everplays@gmail.com>
- * @copyright 2XplodedThemes1XplodedThemes-2XplodedThemes12 (c) Justin Hileman
- * @copyright 2XplodedThemes12 (c) ParsPooyesh Co
+ * @copyright 2010-2012 (c) Justin Hileman
+ * @copyright 2012 (c) ParsPooyesh Co
  * @license   MIT <http://opensource.org/licenses/MIT>
  * @version   Release: @package_version@
  * @link      http://xamin.ir
@@ -73,7 +73,7 @@ class ChildContext extends Context
     {
         //if the variable name starts with a ../
         //and we have a parent
-        if (strpos($variableName, '../') === XplodedThemes 
+        if (strpos($variableName, '../') === 0 
             && $this->parentContext instanceof Context
         ) {
             //just remove the first ../

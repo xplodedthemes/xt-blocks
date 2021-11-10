@@ -1,8 +1,8 @@
 <?php
 /**
- * LazyBlocks tools.
+ * XT_Blocks tools.
  *
- * @package lazyblocks
+ * @package xtblocks
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -10,9 +10,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * LazyBlocks_Tools class. Class to work with LazyBlocks CPT.
+ * XT_Blocks_Tools class. Class to work with XT_Blocks CPT.
  */
-class LazyBlocks_Tools {
+class XT_Blocks_Tools {
     /**
      * Admin notices
      *
@@ -21,7 +21,7 @@ class LazyBlocks_Tools {
     private $notices = array();
 
     /**
-     * LazyBlocks_Tools constructor.
+     * XT_Blocks_Tools constructor.
      */
     public function __construct() {
         add_action( 'admin_menu', array( $this, 'admin_menu' ) );
@@ -44,11 +44,11 @@ class LazyBlocks_Tools {
      */
     public function admin_menu() {
         $page = add_submenu_page(
-            'edit.php?post_type=lazyblocks',
-            esc_html__( 'Export / Import', 'lazy-blocks' ),
-            esc_html__( 'Export / Import', 'lazy-blocks' ),
+            'edit.php?post_type=xtblocks',
+            esc_html__( 'Export / Import', 'xt-blocks' ),
+            esc_html__( 'Export / Import', 'xt-blocks' ),
             'manage_options',
-            'lazyblocks_tools',
+            'xtblocks_tools',
             array( $this, 'render_tools_page' )
         );
 
@@ -61,17 +61,17 @@ class LazyBlocks_Tools {
     public function render_tools_page() {
         ?>
         <div class="wrap">
-            <h1 class="wp-heading-inline"><?php echo esc_html__( 'Export / Import', 'lazy-blocks' ); ?></h1>
+            <h1 class="wp-heading-inline"><?php echo esc_html__( 'Export / Import', 'xt-blocks' ); ?></h1>
 
             <div id="poststuff">
-                <div class="lazyblocks-tools-page">
+                <div class="xtblocks-tools-page">
                     <span class="spinner is-active"></span>
                 </div>
             </div>
             <style type="text/css">
-                .lazyblocks-tools-page > .spinner {
+                .xtblocks-tools-page > .spinner {
                     float: left;
-                    margin-left: XplodedThemes;
+                    margin-left: 0;
                 }
             </style>
         </div>
@@ -87,7 +87,7 @@ class LazyBlocks_Tools {
      * @return array
      */
     public function clean_block_to_export( $block ) {
-        $db_blocks = lazyblocks()->blocks()->get_blocks( true );
+        $db_blocks = xtblocks()->blocks()->get_blocks( true );
 
         foreach ( $db_blocks as $db_block ) {
             if ( $db_block['id'] === $block['id'] ) {
@@ -111,7 +111,7 @@ class LazyBlocks_Tools {
         );
         $preg_replace = array(
             '/([ \r\n]+?)array/' => ' array',
-            '/[XplodedThemes-9]+ => array/'  => 'array',
+            '/[0-9]+ => array/'  => 'array',
             '/\n/'               => "\n    ",
         );
 
@@ -136,7 +136,7 @@ class LazyBlocks_Tools {
 
         $result = '';
 
-        $result .= "\nlazyblocks()->add_block( ";
+        $result .= "\nxtblocks()->add_block( ";
         // phpcs:ignore
         $result .= var_export( $block, true );
         $result .= " );\n";
@@ -153,7 +153,7 @@ class LazyBlocks_Tools {
     public function get_template_php_string_code( $template ) {
         $result = '';
 
-        $result .= "\nlazyblocks()->add_template( ";
+        $result .= "\nxtblocks()->add_template( ";
         // phpcs:ignore
         $result .= var_export( $template, true );
         $result .= " );\n";
@@ -167,16 +167,16 @@ class LazyBlocks_Tools {
     public function admin_enqueue_scripts() {
         $screen = get_current_screen();
 
-        if ( 'lazyblocks_page_lazyblocks_tools' !== $screen->id ) {
+        if ( 'xtblocks_page_xtblocks_tools' !== $screen->id ) {
             return;
         }
 
-        $blocks    = lazyblocks()->blocks()->get_blocks( true, true, true );
-        $templates = lazyblocks()->templates()->get_templates( true, true );
+        $blocks    = xtblocks()->blocks()->get_blocks( true, true, true );
+        $templates = xtblocks()->templates()->get_templates( true, true );
         $data      = array(
             'blocks'    => array(),
             'templates' => array(),
-            'nonce'     => wp_create_nonce( 'lzb-tools-import-nonce' ),
+            'nonce'     => wp_create_nonce( 'xtb-tools-import-nonce' ),
         );
 
         if ( ! empty( $blocks ) ) {
@@ -198,14 +198,14 @@ class LazyBlocks_Tools {
 
         // Lazyblocks Tools.
         wp_enqueue_script(
-            'lazyblocks-tools',
-            lazyblocks()->plugin_url() . 'assets/admin/tools/index.min.js',
+            'xtblocks-tools',
+            xtblocks()->plugin_url() . 'assets/admin/tools/index.min.js',
             array( 'wp-data', 'wp-element', 'wp-components', 'wp-api', 'wp-i18n' ),
             '2.5.1',
             true
         );
 
-        wp_localize_script( 'lazyblocks-tools', 'lazyblocksToolsData', $data );
+        wp_localize_script( 'xtblocks-tools', 'xtblocksToolsData', $data );
     }
 
     /**
@@ -214,31 +214,31 @@ class LazyBlocks_Tools {
     public function import_json() {
         // Check for nonce security.
         // phpcs:ignore
-        $nonce = isset( $_POST[ 'lzb_tools_import_nonce' ] ) ? $_POST[ 'lzb_tools_import_nonce' ] : false;
+        $nonce = isset( $_POST[ 'xtb_tools_import_nonce' ] ) ? $_POST[ 'xtb_tools_import_nonce' ] : false;
 
-        if ( ! $nonce || ! wp_verify_nonce( $nonce, 'lzb-tools-import-nonce' ) ) {
+        if ( ! $nonce || ! wp_verify_nonce( $nonce, 'xtb-tools-import-nonce' ) ) {
             return;
         }
 
         // Check file size.
-        if ( empty( $_FILES['lzb_tools_import_json']['size'] ) ) {
-            $this->add_notice( esc_html__( 'No file selected', 'lazy-blocks' ), 'warning' );
+        if ( empty( $_FILES['xtb_tools_import_json']['size'] ) ) {
+            $this->add_notice( esc_html__( 'No file selected', 'xt-blocks' ), 'warning' );
             return;
         }
 
         // Get file data.
         // phpcs:ignore
-        $file = $_FILES['lzb_tools_import_json'];
+        $file = $_FILES['xtb_tools_import_json'];
 
         // Check for errors.
         if ( $file['error'] ) {
-            $this->add_notice( esc_html__( 'Error uploading file. Please try again', 'lazy-blocks' ), 'warning' );
+            $this->add_notice( esc_html__( 'Error uploading file. Please try again', 'xt-blocks' ), 'warning' );
             return;
         }
 
         // Check file type.
         if ( pathinfo( $file['name'], PATHINFO_EXTENSION ) !== 'json' ) {
-            $this->add_notice( esc_html__( 'Incorrect file type', 'lazy-blocks' ), 'warning' );
+            $this->add_notice( esc_html__( 'Incorrect file type', 'xt-blocks' ), 'warning' );
             return;
         }
 
@@ -249,11 +249,11 @@ class LazyBlocks_Tools {
 
         // Check if empty.
         if ( ! $json || ! is_array( $json ) ) {
-            $this->add_notice( esc_html__( 'Import file empty', 'lazy-blocks' ), 'warning' );
+            $this->add_notice( esc_html__( 'Import file empty', 'xt-blocks' ), 'warning' );
             return;
         }
 
-        $json = apply_filters( 'lzb/import_json', $json );
+        $json = apply_filters( 'xtb/import_json', $json );
 
         // Remember imported ids.
         $imported_blocks    = array();
@@ -288,7 +288,7 @@ class LazyBlocks_Tools {
 
             // Generate text.
             // translators: %s - number of blocks.
-            $text = sprintf( esc_html( _n( 'Imported %s block', 'Imported %s blocks', $total_blocks, 'lazy-blocks' ) ), $total_blocks );
+            $text = sprintf( esc_html( _n( 'Imported %s block', 'Imported %s blocks', $total_blocks, 'xt-blocks' ) ), $total_blocks );
 
             // Add links to text.
             $links = array();
@@ -308,7 +308,7 @@ class LazyBlocks_Tools {
 
             // Generate text.
             // translators: %s - number of templates.
-            $text = sprintf( esc_html( _n( 'Imported %s template', 'Imported %s templates', $total_templates, 'lazy-blocks' ) ), $total_templates );
+            $text = sprintf( esc_html( _n( 'Imported %s template', 'Imported %s templates', $total_templates, 'xt-blocks' ) ), $total_templates );
 
             // Add links to text.
             $links = array();
@@ -326,34 +326,34 @@ class LazyBlocks_Tools {
      * Export JSON.
      */
     public function maybe_export_json() {
-        $block_id  = filter_input( INPUT_GET, 'lazyblocks_export_block', FILTER_SANITIZE_NUMBER_INT );
+        $block_id  = filter_input( INPUT_GET, 'xtblocks_export_block', FILTER_SANITIZE_NUMBER_INT );
         $block_ids = filter_input_array(
             INPUT_GET,
             array(
-                'lazyblocks_export_blocks' => array(
+                'xtblocks_export_blocks' => array(
                     'filter' => FILTER_SANITIZE_NUMBER_INT,
                     'flags'  => FILTER_REQUIRE_ARRAY,
                 ),
             )
         );
-        $block_ids = is_array( $block_ids ) && isset( $block_ids['lazyblocks_export_blocks'] ) ? $block_ids['lazyblocks_export_blocks'] : array();
+        $block_ids = is_array( $block_ids ) && isset( $block_ids['xtblocks_export_blocks'] ) ? $block_ids['xtblocks_export_blocks'] : array();
 
         $template_ids = filter_input_array(
             INPUT_GET,
             array(
-                'lazyblocks_export_templates' => array(
+                'xtblocks_export_templates' => array(
                     'filter' => FILTER_SANITIZE_NUMBER_INT,
                     'flags'  => FILTER_REQUIRE_ARRAY,
                 ),
             )
         );
-        $template_ids = is_array( $template_ids ) && isset( $template_ids['lazyblocks_export_templates'] ) ? $template_ids['lazyblocks_export_templates'] : array();
+        $template_ids = is_array( $template_ids ) && isset( $template_ids['xtblocks_export_templates'] ) ? $template_ids['xtblocks_export_templates'] : array();
 
         if ( isset( $block_id ) && current_user_can( 'read_lazyblock', $block_id ) ) {
             $this->export_json( array( $block_id ) );
-        } elseif ( isset( $block_ids ) && ! empty( $block_ids ) && current_user_can( 'read_lazyblock', $block_ids[XplodedThemes] ) ) {
+        } elseif ( isset( $block_ids ) && ! empty( $block_ids ) && current_user_can( 'read_lazyblock', $block_ids[0] ) ) {
             $this->export_json( $block_ids );
-        } elseif ( isset( $template_ids ) && ! empty( $template_ids ) && current_user_can( 'read_lazyblock', $template_ids[XplodedThemes] ) ) {
+        } elseif ( isset( $template_ids ) && ! empty( $template_ids ) && current_user_can( 'read_lazyblock', $template_ids[0] ) ) {
             $this->export_json( $template_ids, 'templates' );
         }
     }
@@ -373,7 +373,7 @@ class LazyBlocks_Tools {
         }
 
         if ( 'blocks' === $type ) {
-            $blocks = lazyblocks()->blocks()->get_blocks( true );
+            $blocks = xtblocks()->blocks()->get_blocks( true );
 
             foreach ( $blocks as $block ) {
                 if ( in_array( $block['id'], $items, true ) ) {
@@ -381,7 +381,7 @@ class LazyBlocks_Tools {
                 }
             }
         } elseif ( 'templates' === $type ) {
-            $templates = lazyblocks()->templates()->get_templates( true );
+            $templates = xtblocks()->templates()->get_templates( true );
 
             foreach ( $templates as $template ) {
                 if ( in_array( $template['id'], $items, true ) ) {
@@ -391,7 +391,7 @@ class LazyBlocks_Tools {
         }
 
         header( 'Content-Description: File Transfer' );
-        header( 'Content-disposition: attachment; filename=lzb-export-' . $type . '-' . date_i18n( 'Y-m-d' ) . '.json' );
+        header( 'Content-disposition: attachment; filename=xtb-export-' . $type . '-' . date_i18n( 'Y-m-d' ) . '.json' );
         header( 'Content-type: application/json; charset=utf-8' );
         echo wp_json_encode( $result, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE );
 
@@ -405,17 +405,17 @@ class LazyBlocks_Tools {
      */
     private function import_block( $data ) {
         $meta        = array();
-        $meta_prefix = 'lazyblocks_';
+        $meta_prefix = 'xtblocks_';
         $post_id     = wp_insert_post(
             array(
                 'post_title'  => wp_strip_all_tags( $data['title'] ),
                 'post_status' => 'publish',
-                'post_type'   => 'lazyblocks',
+                'post_type'   => 'xtblocks',
             )
         );
 
-        if ( XplodedThemes < $post_id ) {
-            // add 'lazyblocks_' prefix.
+        if ( 0 < $post_id ) {
+            // add 'xtblocks_' prefix.
             foreach ( $data as $k => $val ) {
                 if ( ( 'code' === $k || 'supports' === $k ) && is_array( $val ) ) {
                     foreach ( $val as $i => $inner_val ) {
@@ -432,9 +432,9 @@ class LazyBlocks_Tools {
                 }
             }
 
-            lazyblocks()->blocks()->save_meta_boxes( $post_id, $meta );
+            xtblocks()->blocks()->save_meta_boxes( $post_id, $meta );
 
-            do_action( 'lzb/import/block', $post_id, $data );
+            do_action( 'xtb/import/block', $post_id, $data );
 
             return $post_id;
         }
@@ -452,13 +452,13 @@ class LazyBlocks_Tools {
             return false;
         }
 
-        $templates = lazyblocks()->templates()->get_templates( true );
+        $templates = xtblocks()->templates()->get_templates( true );
 
         // check if template already exists.
         foreach ( $templates as $template ) {
-            if ( count( array_intersect( $data['post_types'], $template['post_types'] ) ) > XplodedThemes ) {
+            if ( count( array_intersect( $data['post_types'], $template['post_types'] ) ) > 0 ) {
                 // translators: %s - post type.
-                $text = sprintf( esc_html__( 'Template for these post types \'%s\' already exists.', 'lazy-blocks' ), implode( ',', $data['post_types'] ) );
+                $text = sprintf( esc_html__( 'Template for these post types \'%s\' already exists.', 'xt-blocks' ), implode( ',', $data['post_types'] ) );
                 $this->add_notice( $text, 'warning' );
                 return false;
             }
@@ -468,17 +468,17 @@ class LazyBlocks_Tools {
             array(
                 'post_title'  => wp_strip_all_tags( $data['title'] ),
                 'post_status' => 'publish',
-                'post_type'   => 'lazyblocks_templates',
+                'post_type'   => 'xtblocks_templates',
             )
         );
 
-        if ( XplodedThemes < $post_id ) {
-            add_post_meta( $post_id, '_lzb_template_blocks', rawurlencode( wp_json_encode( $data['blocks'] ) ) );
-            add_post_meta( $post_id, '_lzb_template_convert_blocks_to_content', true );
-            add_post_meta( $post_id, '_lzb_template_lock', $data['template_lock'] );
-            add_post_meta( $post_id, '_lzb_template_post_types', $data['post_types'] );
+        if ( 0 < $post_id ) {
+            add_post_meta( $post_id, '_xtb_template_blocks', rawurlencode( wp_json_encode( $data['blocks'] ) ) );
+            add_post_meta( $post_id, '_xtb_template_convert_blocks_to_content', true );
+            add_post_meta( $post_id, '_xtb_template_lock', $data['template_lock'] );
+            add_post_meta( $post_id, '_xtb_template_post_types', $data['post_types'] );
 
-            do_action( 'lzb/import/template', $post_id, $data );
+            do_action( 'xtb/import/template', $post_id, $data );
 
             return $post_id;
         }
@@ -490,8 +490,8 @@ class LazyBlocks_Tools {
      * Maybe Duplicate Block.
      */
     public function maybe_duplicate_block() {
-        $block_id          = filter_input( INPUT_GET, 'lazyblocks_duplicate_block', FILTER_SANITIZE_NUMBER_INT );
-        $block_id_complete = filter_input( INPUT_GET, 'lazyblocks_duplicate_complete', FILTER_SANITIZE_NUMBER_INT );
+        $block_id          = filter_input( INPUT_GET, 'xtblocks_duplicate_block', FILTER_SANITIZE_NUMBER_INT );
+        $block_id_complete = filter_input( INPUT_GET, 'xtblocks_duplicate_complete', FILTER_SANITIZE_NUMBER_INT );
 
         // Duplicate block.
         if ( isset( $block_id ) && current_user_can( 'read_lazyblock', $block_id ) ) {
@@ -504,7 +504,7 @@ class LazyBlocks_Tools {
 
             if ( isset( $post ) && $post ) {
                 // translators: %s - post title.
-                $text = sprintf( esc_html__( 'Added new block \'%s\'.', 'lazy-blocks' ), $post->post_title );
+                $text = sprintf( esc_html__( 'Added new block \'%s\'.', 'xt-blocks' ), $post->post_title );
                 $this->add_notice( $text, 'success' );
             }
         }
@@ -518,9 +518,9 @@ class LazyBlocks_Tools {
     public function duplicate_block( $block_id ) {
         // Check for nonce security.
         // phpcs:ignore
-        $nonce = isset( $_GET[ 'lazyblocks_duplicate_block_nonce' ] ) ? $_GET[ 'lazyblocks_duplicate_block_nonce' ] : false;
+        $nonce = isset( $_GET[ 'xtblocks_duplicate_block_nonce' ] ) ? $_GET[ 'xtblocks_duplicate_block_nonce' ] : false;
 
-        if ( ! $nonce || ! wp_verify_nonce( $nonce, 'lzb-duplicate-block-nonce' ) ) {
+        if ( ! $nonce || ! wp_verify_nonce( $nonce, 'xtb-duplicate-block-nonce' ) ) {
             return;
         }
 
@@ -584,7 +584,7 @@ class LazyBlocks_Tools {
             }
 
             // Redirect.
-            wp_safe_redirect( admin_url( 'edit.php?post_type=lazyblocks&lazyblocks_duplicate_complete=' . $new_post_id ) );
+            wp_safe_redirect( admin_url( 'edit.php?post_type=xtblocks&xtblocks_duplicate_complete=' . $new_post_id ) );
 
             exit;
         }

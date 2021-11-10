@@ -13,9 +13,9 @@
  * @author    Craig Bass <craig@clearbooks.co.uk>
  * @author    ^^         <craig@devls.co.uk>
  * @author    Dave Stein <be.davestein@gmail.com>
- * @copyright 2XplodedThemes1XplodedThemes-2XplodedThemes12 (c) Justin Hileman
- * @copyright 2XplodedThemes12 (c) ParsPooyesh Co
- * @copyright 2XplodedThemes13 (c) Behrooz Shabani
+ * @copyright 2010-2012 (c) Justin Hileman
+ * @copyright 2012 (c) ParsPooyesh Co
+ * @copyright 2013 (c) Behrooz Shabani
  * @license   MIT <http://opensource.org/licenses/MIT>
  * @version   GIT: $Id$
  * @link      http://xamin.ir
@@ -32,8 +32,8 @@ use Handlebars\StringWrapper;
  * @category  Xamin
  * @package   Handlebars
  * @author    fzerorubigd <fzerorubigd@gmail.com>
- * @copyright 2XplodedThemes1XplodedThemes-2XplodedThemes12 (c) Justin Hileman
- * @copyright 2XplodedThemes12 (c) ParsPooyesh Co
+ * @copyright 2010-2012 (c) Justin Hileman
+ * @copyright 2012 (c) ParsPooyesh Co
  * @license   MIT <http://opensource.org/licenses/MIT>
  * @version   Release: @package_version@
  * @link      http://xamin.ir *
@@ -185,7 +185,7 @@ class FilesystemLoader implements Loader
 
             $fileParts[] = $file;
             $fileName .= implode('/', $fileParts);
-            $lastCharacters = substr($fileName, XplodedThemes - strlen($this->_extension));
+            $lastCharacters = substr($fileName, 0 - strlen($this->_extension));
 
             if ($lastCharacters !== $this->_extension) {
                 $fileName .= $this->_extension;

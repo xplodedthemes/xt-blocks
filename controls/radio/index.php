@@ -2,7 +2,7 @@
 /**
  * Radio Control.
  *
- * @package lazyblocks
+ * @package xtblocks
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -10,17 +10,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * LazyBlocks_Control_Radio class.
+ * XT_Blocks_Control_Radio class.
  */
-class LazyBlocks_Control_Radio extends LazyBlocks_Control {
+class XT_Blocks_Control_Radio extends XT_Blocks_Control {
     /**
      * Constructor
      */
     public function __construct() {
         $this->name       = 'radio';
-        $this->icon       = '<svg width="24" height="24" viewBox="XplodedThemes XplodedThemes 24 24" fill="none" xmlns="http://www.w3.org/2XplodedThemesXplodedThemesXplodedThemes/svg"><circle cx="12" cy="12" r="8.25" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="4" fill="currentColor"/></svg>';
+        $this->icon       = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="8.25" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="4" fill="currentColor"/></svg>';
         $this->type       = 'string';
-        $this->label      = __( 'Radio', 'lazy-blocks' );
+        $this->label      = __( 'Radio', 'xt-blocks' );
         $this->category   = 'choice';
         $this->attributes = array(
             'choices'       => array(),
@@ -30,8 +30,8 @@ class LazyBlocks_Control_Radio extends LazyBlocks_Control {
         );
 
         // Filters.
-        add_filter( 'lzb/block_render/attributes', array( $this, 'filter_lzb_block_render_attributes' ), 1XplodedThemes, 3 );
-        add_filter( 'lzb/get_meta', array( $this, 'filter_get_lzb_meta_json' ), 1XplodedThemes, 4 );
+        add_filter( 'xtb/block_render/attributes', array( $this, 'filter_xtb_block_render_attributes' ), 10, 3 );
+        add_filter( 'xtb/get_meta', array( $this, 'filter_get_xtb_meta_json' ), 10, 4 );
 
         parent::__construct();
     }
@@ -41,8 +41,8 @@ class LazyBlocks_Control_Radio extends LazyBlocks_Control {
      */
     public function register_assets() {
         wp_register_script(
-            'lazyblocks-control-radio',
-            lazyblocks()->plugin_url() . 'controls/radio/script.min.js',
+            'xtblocks-control-radio',
+            xtblocks()->plugin_url() . 'controls/radio/script.min.js',
             array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-components' ),
             '2.5.1',
             true
@@ -55,7 +55,7 @@ class LazyBlocks_Control_Radio extends LazyBlocks_Control {
      * @return array script dependencies.
      */
     public function get_script_depends() {
-        return array( 'lazyblocks-control-radio' );
+        return array( 'xtblocks-control-radio' );
     }
 
     /**
@@ -92,7 +92,7 @@ class LazyBlocks_Control_Radio extends LazyBlocks_Control {
      *
      * @return array filtered attribute data.
      */
-    public function filter_lzb_block_render_attributes( $attributes, $content, $block ) {
+    public function filter_xtb_block_render_attributes( $attributes, $content, $block ) {
         if ( ! isset( $block['controls'] ) || empty( $block['controls'] ) ) {
             return $attributes;
         }
@@ -119,7 +119,7 @@ class LazyBlocks_Control_Radio extends LazyBlocks_Control {
     }
 
     /**
-     * Change get_lzb_meta output to custom output if needed.
+     * Change get_xtb_meta output to custom output if needed.
      *
      * @param string $result - meta data.
      * @param string $name - meta name.
@@ -128,7 +128,7 @@ class LazyBlocks_Control_Radio extends LazyBlocks_Control {
      *
      * @return array filtered meta.
      */
-    public function filter_get_lzb_meta_json( $result, $name, $id, $control ) {
+    public function filter_get_xtb_meta_json( $result, $name, $id, $control ) {
         if ( ! $control || $this->name !== $control['type'] ) {
             return $result;
         }
@@ -152,4 +152,4 @@ class LazyBlocks_Control_Radio extends LazyBlocks_Control {
     }
 }
 
-new LazyBlocks_Control_Radio();
+new XT_Blocks_Control_Radio();

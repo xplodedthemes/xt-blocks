@@ -2,7 +2,7 @@
 /**
  * Deprecations.
  *
- * @package lazy-blocks
+ * @package xt-blocks
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -10,19 +10,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Class LazyBlocks_Deprecations
+ * Class XT_Blocks_Deprecations
  */
-class LazyBlocks_Deprecations {
+class XT_Blocks_Deprecations {
     /**
-     * LazyBlocks_Deprecations constructor.
+     * XT_Blocks_Deprecations constructor.
      */
     public function __construct() {
-        // Filters for v2.5.XplodedThemes.
-        add_filter( 'lzb/add_user_template', array( $this, 'v2_5_XplodedThemes_convert_user_template' ) );
-        add_filter( 'lzb/import_json', array( $this, 'v2_5_XplodedThemes_convert_import_json_template' ) );
+        // Filters for v2.5.0.
+        add_filter( 'xtb/add_user_template', array( $this, 'v2_5_0_convert_user_template' ) );
+        add_filter( 'xtb/import_json', array( $this, 'v2_5_0_convert_import_json_template' ) );
 
-        // Filters for v2.1.XplodedThemes.
-        add_filter( 'lzb/add_user_block', array( $this, 'v2_1_XplodedThemes_convert_user_block' ) );
+        // Filters for v2.1.0.
+        add_filter( 'xtb/add_user_block', array( $this, 'v2_1_0_convert_user_block' ) );
     }
 
     /**
@@ -32,7 +32,7 @@ class LazyBlocks_Deprecations {
      *
      * @return array
      */
-    public function v2_5_XplodedThemes_convert_user_template( $data ) {
+    public function v2_5_0_convert_user_template( $data ) {
         if ( isset( $data['data'] ) ) {
             $data['post_types']    = array( $data['data']['post_type'] );
             $data['template_lock'] = $data['data']['template_lock'];
@@ -57,11 +57,11 @@ class LazyBlocks_Deprecations {
      *
      * @return array
      */
-    public function v2_5_XplodedThemes_convert_import_json_template( $json ) {
+    public function v2_5_0_convert_import_json_template( $json ) {
         // Loop over json.
         foreach ( $json as $k => $data ) {
             if ( isset( $data['id'] ) && ! isset( $data['controls'] ) && isset( $data['data'] ) ) {
-                $json[ $k ] = $this->v2_5_XplodedThemes_convert_user_template( $data );
+                $json[ $k ] = $this->v2_5_0_convert_user_template( $data );
             }
         }
 
@@ -75,7 +75,7 @@ class LazyBlocks_Deprecations {
      *
      * @return array
      */
-    public function v2_1_XplodedThemes_convert_user_block( $data ) {
+    public function v2_1_0_convert_user_block( $data ) {
         // Fix deprecated 'use_php' and new 'output_method' code data.
         if ( isset( $data['code'] ) && ! isset( $data['code']['output_method'] ) ) {
             if ( isset( $data['code']['use_php'] ) && $data['code']['use_php'] ) {
@@ -93,4 +93,4 @@ class LazyBlocks_Deprecations {
     }
 }
 
-new LazyBlocks_Deprecations();
+new XT_Blocks_Deprecations();

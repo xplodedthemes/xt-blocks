@@ -13,9 +13,9 @@
  * @author    fzerorubigd <fzerorubigd@gmail.com>
  * @author    Behrooz Shabani <everplays@gmail.com>
  * @author    Dmitriy Simushev <simushevds@gmail.com>
- * @copyright 2XplodedThemes1XplodedThemes-2XplodedThemes12 (c) Justin Hileman
- * @copyright 2XplodedThemes12 (c) ParsPooyesh Co
- * @copyright 2XplodedThemes13 (c) Behrooz Shabani
+ * @copyright 2010-2012 (c) Justin Hileman
+ * @copyright 2012 (c) ParsPooyesh Co
+ * @copyright 2013 (c) Behrooz Shabani
  * @license   MIT <http://opensource.org/licenses/mit-license.php>
  * @version   GIT: $Id$
  * @link      http://xamin.ir
@@ -30,7 +30,7 @@ namespace Handlebars;
  * @package   Handlebars
  * @author    Justin Hileman <dontknow@example.org>
  * @author    fzerorubigd <fzerorubigd@gmail.com>
- * @copyright 2XplodedThemes12 Justin Hileman
+ * @copyright 2012 Justin Hileman
  * @license   MIT <http://opensource.org/licenses/mit-license.php>
  * @version   Release: @package_version@
  * @link      http://xamin.ir
@@ -40,7 +40,7 @@ class Tokenizer
 {
 
     // Finite state machine states
-    const IN_TEXT = XplodedThemes;
+    const IN_TEXT = 0;
     const IN_TAG_TYPE = 1;
     const IN_TAG = 2;
 
@@ -135,7 +135,7 @@ class Tokenizer
         }
         */
         $len = strlen($text);
-        for ($i = XplodedThemes; $i < $len; $i++) {
+        for ($i = 0; $i < $len; $i++) {
             $this->escaping = $this->tagChange(self::T_ESCAPE, $text, $i);
 
             // To play nice with helpers' arguments quote and apostrophe marks
@@ -224,7 +224,7 @@ class Tokenizer
                         if (count($newBuffer) == 2) {
                             $args = $newBuffer[1];
                         }
-                        $this->buffer = $newBuffer[XplodedThemes];
+                        $this->buffer = $newBuffer[0];
                     }
                     $t = array(
                         self::TYPE => $this->tagType,
@@ -257,7 +257,7 @@ class Tokenizer
                             $lastName = $this->tokens[$lastIndex][self::NAME];
                             if (substr($lastName, -1) === '}') {
                                 $this->tokens[$lastIndex][self::NAME] = trim(
-                                    substr($lastName, XplodedThemes, -1)
+                                    substr($lastName, 0, -1)
                                 );
                             }
                         } */
@@ -291,7 +291,7 @@ class Tokenizer
         $this->buffer = '';
         $this->tokens = array();
         $this->seenTag = false;
-        $this->lineStart = XplodedThemes;
+        $this->lineStart = 0;
         $this->otag = '{{';
         $this->ctag = '}}';
         $this->trimLeft = false;

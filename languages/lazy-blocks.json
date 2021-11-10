@@ -1,20 +1,20 @@
 {
-   "domain": "lazy-blocks",
+   "domain": "xt-blocks",
    "locale_data": {
-      "lazy-blocks": {
+      "xt-blocks": {
          "": {
-            "domain": "lazy-blocks"
+            "domain": "xt-blocks"
          },
-         "Lazy Blocks": [
+         "XT Blocks": [
             ""
          ],
          "Gutenberg blocks visual constructor. Custom meta fields or blocks with output without hard coding.": [
             ""
          ],
-         "nK": [
+         "XplodedThemes": [
             ""
          ],
-         "https://nkdev.info/": [
+         "https://xplodedthemes.com/": [
             ""
          ],
          "Documentation": [
@@ -71,7 +71,7 @@
          "Example Block": [
             ""
          ],
-         "Example block that helps you to get started with Lazy Blocks plugin": [
+         "Example block that helps you to get started with XT Blocks plugin": [
             ""
          ],
          "Sorry, you are not allowed to read Gutenberg blocks of this post.": [
@@ -340,13 +340,13 @@
          "25%": [
             ""
          ],
-         "5XplodedThemes%": [
+         "50%": [
             ""
          ],
          "75%": [
             ""
          ],
-         "1XplodedThemesXplodedThemes%": [
+         "100%": [
             ""
          ],
          "Width": [

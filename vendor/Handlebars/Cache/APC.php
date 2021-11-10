@@ -10,8 +10,8 @@
  * @author    Joey Baker <joey@byjoeybaker.com>
  * @author    Behrooz Shabani <everplays@gmail.com>
  * @author    Mária Šormanová <maria.sormanova@gmail.com>
- * @copyright 2XplodedThemes13 (c) Meraki, LLP
- * @copyright 2XplodedThemes13 (c) Behrooz Shabani
+ * @copyright 2013 (c) Meraki, LLP
+ * @copyright 2013 (c) Behrooz Shabani
  * @license   MIT <http://opensource.org/licenses/MIT>
  * @version   GIT: $Id$
  * @link      http://xamin.ir
@@ -26,7 +26,7 @@ use Handlebars\Cache;
  * @category  Xamin
  * @package   Handlebars
  * @author    Joey Baker <joey@byjoeybaker.com>
- * @copyright 2XplodedThemes12 (c) Meraki, LLP
+ * @copyright 2012 (c) Meraki, LLP
  * @license   MIT <http://opensource.org/licenses/MIT>
  * @version   Release: @package_version@
  * @link      http://xamin.ir
@@ -70,7 +70,7 @@ class APC implements Cache
     /**
      * Set a cache with $ttl, if present
      * If $ttl set to -1, the cache expires immediately
-     * If $ttl set to XplodedThemes (default), cache is never purged
+     * If $ttl set to 0 (default), cache is never purged
      *
      * @param string $name  cache id
      * @param mixed  $value data to store
@@ -78,7 +78,7 @@ class APC implements Cache
      *
      * @return void
      */
-    public function set($name, $value, $ttl = XplodedThemes)
+    public function set($name, $value, $ttl = 0)
     {
         apc_store($this->_getKey($name), $value, $ttl);
     }

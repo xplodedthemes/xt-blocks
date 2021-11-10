@@ -4,7 +4,7 @@
  *
  * @var $template_name
  *
- * @package lazyblocks
+ * @package xtblocks
  */
 
 ?>
@@ -14,7 +14,7 @@
     echo wp_kses_post(
         sprintf(
             // translators: %1$s - template file path.
-            __( 'Template file <code>%1$s</code> not found.', 'lazy-blocks' ),
+            __( 'Template file <code>%1$s</code> not found.', 'xt-blocks' ),
             'blocks/' . $template_name . '/block.php'
         )
     );

@@ -1,8 +1,8 @@
 <?php
 /**
- * LazyBlocks controls.
+ * XT_Blocks controls.
  *
- * @package lazyblocks
+ * @package xtblocks
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -10,11 +10,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * LazyBlocks_Controls class. Class to work with LazyBlocks Controls.
+ * XT_Blocks_Controls class. Class to work with XT_Blocks Controls.
  */
-class LazyBlocks_Controls {
+class XT_Blocks_Controls {
     /**
-     * LazyBlocks_Controls constructor.
+     * XT_Blocks_Controls constructor.
      */
     public function __construct() {
         $this->include_controls();
@@ -26,7 +26,7 @@ class LazyBlocks_Controls {
      * @return array
      */
     public function get_controls() {
-        return apply_filters( 'lzb/controls/all', array() );
+        return apply_filters( 'xtb/controls/all', array() );
     }
 
     /**
@@ -36,13 +36,13 @@ class LazyBlocks_Controls {
      */
     public function get_controls_categories() {
         return apply_filters(
-            'lzb/controls/categories',
+            'xtb/controls/categories',
             array(
-                'basic'    => __( 'Basic', 'lazy-blocks' ),
-                'content'  => __( 'Content', 'lazy-blocks' ),
-                'choice'   => __( 'Choice', 'lazy-blocks' ),
-                'advanced' => __( 'Advanced', 'lazy-blocks' ),
-                'layout'   => __( 'Layout', 'lazy-blocks' ),
+                'basic'    => __( 'Basic', 'xt-blocks' ),
+                'content'  => __( 'Content', 'xt-blocks' ),
+                'choice'   => __( 'Choice', 'xt-blocks' ),
+                'advanced' => __( 'Advanced', 'xt-blocks' ),
+                'layout'   => __( 'Layout', 'xt-blocks' ),
             )
         );
     }
@@ -114,6 +114,6 @@ class LazyBlocks_Controls {
      * @return boolean
      */
     private function ends_with( $haystack, $needle ) {
-        return substr_compare( $haystack, $needle, -strlen( $needle ) ) === XplodedThemes;
+        return substr_compare( $haystack, $needle, -strlen( $needle ) ) === 0;
     }
 }

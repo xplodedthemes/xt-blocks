@@ -14,9 +14,9 @@
  * @author    majortom731 <majortom731@googlemail.com>
  * @author    Jeff Turcotte <jeff.turcotte@gmail.com>
  * @author    John Slegers <slegersjohn@gmail.com>
- * @copyright 2XplodedThemes1XplodedThemes-2XplodedThemes12 (c) Justin Hileman
- * @copyright 2XplodedThemes12 (c) ParsPooyesh Co
- * @copyright 2XplodedThemes13 (c) Behrooz Shabani
+ * @copyright 2010-2012 (c) Justin Hileman
+ * @copyright 2012 (c) ParsPooyesh Co
+ * @copyright 2013 (c) Behrooz Shabani
  * @license   MIT <http://opensource.org/licenses/MIT>
  * @version   GIT: $Id$
  * @link      http://xamin.ir
@@ -34,8 +34,8 @@ use Traversable;
  * @package   Handlebars
  * @author    fzerorubigd <fzerorubigd@gmail.com>
  * @author    Pascal Thormeier <pascal.thormeier@gmail.com>
- * @copyright 2XplodedThemes1XplodedThemes-2XplodedThemes12 (c) Justin Hileman
- * @copyright 2XplodedThemes12 (c) ParsPooyesh Co
+ * @copyright 2010-2012 (c) Justin Hileman
+ * @copyright 2012 (c) ParsPooyesh Co
  * @license   MIT <http://opensource.org/licenses/MIT>
  * @version   Release: @package_version@
  * @link      http://xamin.ir
@@ -79,7 +79,7 @@ class Template
         $this->handlebars = $engine;
         $this->tree = $tree;
         $this->source = $source;
-        array_push($this->stack, array(XplodedThemes, $this->getTree(), false));
+        array_push($this->stack, array(0, $this->getTree(), false));
     }
 
     /**
@@ -211,7 +211,7 @@ class Template
         if ($stop) {
             //Ok break here, the helper should be aware of this.
             $newStack = array_pop($this->stack);
-            $newStack[XplodedThemes] = $index;
+            $newStack[0] = $index;
             $newStack[2] = false; //No stop token from now on
             array_push($this->stack, $newStack);
         }
@@ -236,14 +236,14 @@ class Template
         case Tokenizer::T_SECTION :
             $newStack = isset($current[Tokenizer::NODES])
                 ? $current[Tokenizer::NODES] : array();
-            array_push($this->stack, array(XplodedThemes, $newStack, false));
+            array_push($this->stack, array(0, $newStack, false));
             $result = $this->_section($context, $current);
             array_pop($this->stack);
             break;
         case Tokenizer::T_INVERTED :
             $newStack = isset($current[Tokenizer::NODES]) ?
                 $current[Tokenizer::NODES] : array();
-            array_push($this->stack, array(XplodedThemes, $newStack, false));
+            array_push($this->stack, array(0, $newStack, false));
             $result = $this->_inverted($context, $current);
             array_pop($this->stack);
             break;
@@ -299,7 +299,7 @@ class Template
         if ($stop) {
             //Ok break here, the helper should be aware of this.
             $newStack = array_pop($this->stack);
-            $newStack[XplodedThemes] = $index;
+            $newStack[0] = $index;
             $newStack[2] = false;
             array_push($this->stack, $newStack);
         }
@@ -315,7 +315,7 @@ class Template
     public function rewind()
     {
         $topStack = array_pop($this->stack);
-        $topStack[XplodedThemes] = XplodedThemes;
+        $topStack[0] = 0;
         array_push($this->stack, $topStack);
     }
 
@@ -347,9 +347,9 @@ class Template
         // inside outermost brackets
         $subexprs = array();
         $insideOf = array( 'single' => false, 'double' => false );
-        $lvl = XplodedThemes;
-        $cur_start = XplodedThemes;
-        for ($i=XplodedThemes; $i < strlen($current[Tokenizer::ARGS]); $i++) {
+        $lvl = 0;
+        $cur_start = 0;
+        for ($i=0; $i < strlen($current[Tokenizer::ARGS]); $i++) {
             $cur = substr($current[Tokenizer::ARGS], $i, 1);
             if ($cur == "'" ) {
                 $insideOf['single'] = ! $insideOf['single'];
@@ -358,7 +358,7 @@ class Template
                 $insideOf['double'] = ! $insideOf['double'];
             }
             if ($cur == '(' && ! $insideOf['single'] && ! $insideOf['double']) {
-                if ($lvl == XplodedThemes) {
+                if ($lvl == 0) {
                     $cur_start = $i+1;
                 }
                 $lvl++;
@@ -366,7 +366,7 @@ class Template
             }
             if ($cur == ')' && ! $insideOf['single'] && ! $insideOf['double']) {
                 $lvl--;
-                if ($lvl == XplodedThemes) {
+                if ($lvl == 0) {
                     $subexprs[] = substr(
                         $current[Tokenizer::ARGS], 
                         $cur_start, 
@@ -380,7 +380,7 @@ class Template
         if (! empty($subexprs)) {
             foreach ($subexprs as $expr) {
                 $cmd = explode(" ", $expr);
-                $name = trim($cmd[XplodedThemes]);
+                $name = trim($cmd[0]);
                 // construct artificial section node
                 $section_node = array(
                     Tokenizer::TYPE => Tokenizer::T_ESCAPED,
@@ -449,13 +449,13 @@ class Template
         }
         $buffer = '';
         if ($this->_checkIterable($sectionVar)) {
-            $index = XplodedThemes;
+            $index = 0;
             $lastIndex = (count($sectionVar) - 1);
             foreach ($sectionVar as $key => $d) {
                 $context->pushSpecialVariables(
                     array(
                         '@index' => $index,
-                        '@first' => ($index === XplodedThemes),
+                        '@first' => ($index === 0),
                         '@last' => ($index === $lastIndex),
                         '@key' => $key
                     )
@@ -723,7 +723,7 @@ class Template
         case 'object':
             return $value instanceof Traversable;
         case 'array':
-            $i = XplodedThemes;
+            $i = 0;
             foreach ($value as $k => $v) {
                 if ($k !== $i++) {
                     return false;

@@ -2,7 +2,7 @@
 /**
  * Toggle Control.
  *
- * @package lazyblocks
+ * @package xtblocks
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -10,17 +10,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * LazyBlocks_Control_Toggle class.
+ * XT_Blocks_Control_Toggle class.
  */
-class LazyBlocks_Control_Toggle extends LazyBlocks_Control {
+class XT_Blocks_Control_Toggle extends XT_Blocks_Control {
     /**
      * Constructor
      */
     public function __construct() {
         $this->name         = 'toggle';
-        $this->icon         = '<svg width="24" height="24" viewBox="XplodedThemes XplodedThemes 24 24" fill="none" xmlns="http://www.w3.org/2XplodedThemesXplodedThemesXplodedThemes/svg"><circle cx="7" cy="12" r="3" fill="currentColor"/><rect x="1.75" y="6.75" width="2XplodedThemes.5" height="1XplodedThemes.5" rx="5.25" stroke="currentColor" stroke-width="1.5"/></svg>';
+        $this->icon         = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="7" cy="12" r="3" fill="currentColor"/><rect x="1.75" y="6.75" width="20.5" height="10.5" rx="5.25" stroke="currentColor" stroke-width="1.5"/></svg>';
         $this->type         = 'boolean';
-        $this->label        = __( 'Toggle', 'lazy-blocks' );
+        $this->label        = __( 'Toggle', 'xt-blocks' );
         $this->category     = 'choice';
         $this->restrictions = array(
             'default_settings' => false,
@@ -31,7 +31,7 @@ class LazyBlocks_Control_Toggle extends LazyBlocks_Control {
         );
 
         // Filters.
-        add_filter( 'lzb/prepare_block_attribute', array( $this, 'filter_lzb_prepare_block_attribute' ), 1XplodedThemes, 2 );
+        add_filter( 'xtb/prepare_block_attribute', array( $this, 'filter_xtb_prepare_block_attribute' ), 10, 2 );
 
         parent::__construct();
     }
@@ -41,8 +41,8 @@ class LazyBlocks_Control_Toggle extends LazyBlocks_Control {
      */
     public function register_assets() {
         wp_register_script(
-            'lazyblocks-control-toggle',
-            lazyblocks()->plugin_url() . 'controls/toggle/script.min.js',
+            'xtblocks-control-toggle',
+            xtblocks()->plugin_url() . 'controls/toggle/script.min.js',
             array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-components' ),
             '2.5.1',
             true
@@ -55,7 +55,7 @@ class LazyBlocks_Control_Toggle extends LazyBlocks_Control {
      * @return array script dependencies.
      */
     public function get_script_depends() {
-        return array( 'lazyblocks-control-toggle' );
+        return array( 'xtblocks-control-toggle' );
     }
 
     /**
@@ -66,7 +66,7 @@ class LazyBlocks_Control_Toggle extends LazyBlocks_Control {
      *
      * @return array filtered attribute data.
      */
-    public function filter_lzb_prepare_block_attribute( $attribute_data, $control ) {
+    public function filter_xtb_prepare_block_attribute( $attribute_data, $control ) {
         if (
             ! $control ||
             ! isset( $control['type'] ) ||
@@ -84,4 +84,4 @@ class LazyBlocks_Control_Toggle extends LazyBlocks_Control {
     }
 }
 
-new LazyBlocks_Control_Toggle();
+new XT_Blocks_Control_Toggle();

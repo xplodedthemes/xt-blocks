@@ -2,7 +2,7 @@
 /**
  * Image Control.
  *
- * @package lazyblocks
+ * @package xtblocks
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -10,17 +10,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * LazyBlocks_Control_Image class.
+ * XT_Blocks_Control_Image class.
  */
-class LazyBlocks_Control_Image extends LazyBlocks_Control {
+class XT_Blocks_Control_Image extends XT_Blocks_Control {
     /**
      * Constructor
      */
     public function __construct() {
         $this->name         = 'image';
-        $this->icon         = '<svg width="24" height="24" viewBox="XplodedThemes XplodedThemes 24 24" fill="none" xmlns="http://www.w3.org/2XplodedThemesXplodedThemesXplodedThemes/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M19 4.5H5C4.72386 4.5 4.5 4.72386 4.5 5V19C4.5 19.2761 4.72386 19.5 5 19.5H19C19.2761 19.5 19.5 19.2761 19.5 19V5C19.5 4.72386 19.2761 4.5 19 4.5ZM5 3C3.89543 3 3 3.89543 3 5V19C3 2XplodedThemes.1XplodedThemes46 3.89543 21 5 21H19C2XplodedThemes.1XplodedThemes46 21 21 2XplodedThemes.1XplodedThemes46 21 19V5C21 3.89543 2XplodedThemes.1XplodedThemes46 3 19 3H5Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M15.4772 1XplodedThemes.4623C15.7683 1XplodedThemes.1792 16.2317 1XplodedThemes.1792 16.5228 1XplodedThemes.4623L2XplodedThemes.5228 14.3511L19.4772 15.4266L16 12.XplodedThemes46L12.5228 15.4266C12.2719 15.67XplodedThemes6 11.8857 15.7XplodedThemes86 11.5921 15.5183L8.59643 13.5766L4.44186 16.6XplodedThemes6L3.55811 15.394L8.12953 12.XplodedThemes6XplodedThemes7C8.38XplodedThemes61 11.8776 8.71858 11.8683 8.97934 12.XplodedThemes373L11.9XplodedThemes6 13.9342L15.4772 1XplodedThemes.4623Z" fill="currentColor"/></svg>';
+        $this->icon         = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M19 4.5H5C4.72386 4.5 4.5 4.72386 4.5 5V19C4.5 19.2761 4.72386 19.5 5 19.5H19C19.2761 19.5 19.5 19.2761 19.5 19V5C19.5 4.72386 19.2761 4.5 19 4.5ZM5 3C3.89543 3 3 3.89543 3 5V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V5C21 3.89543 20.1046 3 19 3H5Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M15.4772 10.4623C15.7683 10.1792 16.2317 10.1792 16.5228 10.4623L20.5228 14.3511L19.4772 15.4266L16 12.046L12.5228 15.4266C12.2719 15.6706 11.8857 15.7086 11.5921 15.5183L8.59643 13.5766L4.44186 16.606L3.55811 15.394L8.12953 12.0607C8.38061 11.8776 8.71858 11.8683 8.97934 12.0373L11.906 13.9342L15.4772 10.4623Z" fill="currentColor"/></svg>';
         $this->type         = 'string';
-        $this->label        = __( 'Image', 'lazy-blocks' );
+        $this->label        = __( 'Image', 'xt-blocks' );
         $this->category     = 'content';
         $this->restrictions = array(
             'default_settings' => false,
@@ -30,8 +30,8 @@ class LazyBlocks_Control_Image extends LazyBlocks_Control {
         );
 
         // Filters.
-        add_filter( 'lzb/block_render/attributes', array( $this, 'filter_lzb_block_render_attributes' ), 1XplodedThemes, 3 );
-        add_filter( 'lzb/get_meta', array( $this, 'filter_get_lzb_meta_json' ), 1XplodedThemes, 4 );
+        add_filter( 'xtb/block_render/attributes', array( $this, 'filter_xtb_block_render_attributes' ), 10, 3 );
+        add_filter( 'xtb/get_meta', array( $this, 'filter_get_xtb_meta_json' ), 10, 4 );
 
         parent::__construct();
     }
@@ -41,8 +41,8 @@ class LazyBlocks_Control_Image extends LazyBlocks_Control {
      */
     public function register_assets() {
         wp_register_script(
-            'lazyblocks-control-image',
-            lazyblocks()->plugin_url() . 'controls/image/script.min.js',
+            'xtblocks-control-image',
+            xtblocks()->plugin_url() . 'controls/image/script.min.js',
             array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-components' ),
             '2.5.1',
             true
@@ -55,7 +55,7 @@ class LazyBlocks_Control_Image extends LazyBlocks_Control {
      * @return array script dependencies.
      */
     public function get_script_depends() {
-        return array( 'lazyblocks-control-image' );
+        return array( 'xtblocks-control-image' );
     }
 
     /**
@@ -108,7 +108,7 @@ class LazyBlocks_Control_Image extends LazyBlocks_Control {
      *
      * @return array filtered attribute data.
      */
-    public function filter_lzb_block_render_attributes( $attributes, $content, $block ) {
+    public function filter_xtb_block_render_attributes( $attributes, $content, $block ) {
         if ( ! isset( $block['controls'] ) || empty( $block['controls'] ) ) {
             return $attributes;
         }
@@ -124,7 +124,7 @@ class LazyBlocks_Control_Image extends LazyBlocks_Control {
     }
 
     /**
-     * Change get_lzb_meta output to array.
+     * Change get_xtb_meta output to array.
      *
      * @param string $result - meta data.
      * @param string $name - meta name.
@@ -133,7 +133,7 @@ class LazyBlocks_Control_Image extends LazyBlocks_Control {
      *
      * @return array filtered meta.
      */
-    public function filter_get_lzb_meta_json( $result, $name, $id, $control ) {
+    public function filter_get_xtb_meta_json( $result, $name, $id, $control ) {
         if ( ! $control || $this->name !== $control['type'] || ! is_string( $result ) ) {
             return $result;
         }
@@ -142,4 +142,4 @@ class LazyBlocks_Control_Image extends LazyBlocks_Control {
     }
 }
 
-new LazyBlocks_Control_Image();
+new XT_Blocks_Control_Image();

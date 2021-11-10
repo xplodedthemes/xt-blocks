@@ -1,8 +1,8 @@
 <?php
 /**
- * LazyBlocks controls base class.
+ * XT_Blocks controls base class.
  *
- * @package lazyblocks
+ * @package xtblocks
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -11,9 +11,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
 /**
- * LazyBlocks_Control class.
+ * XT_Blocks_Control class.
  */
-class LazyBlocks_Control {
+class XT_Blocks_Control {
     /**
      * Control unique name.
      *
@@ -89,7 +89,7 @@ class LazyBlocks_Control {
         'help'                 => '',
         'child_of'             => '',
         'placement'            => 'content',
-        'width'                => '1XplodedThemesXplodedThemes',
+        'width'                => '100',
         'hide_if_not_selected' => 'false',
         'save_in_meta'         => 'false',
         'save_in_meta_name'    => '',
@@ -120,7 +120,7 @@ class LazyBlocks_Control {
         );
 
         // Filters.
-        add_filter( 'lzb/controls/all', array( $this, 'get_control_data' ) );
+        add_filter( 'xtb/controls/all', array( $this, 'get_control_data' ) );
 
         // Actions.
         add_action( 'enqueue_block_editor_assets', array( $this, 'register_assets' ) );

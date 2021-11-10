@@ -11,9 +11,9 @@
  * @author    Behrooz Shabani <everplays@gmail.com>
  * @author    Jeff Turcotte <jeff.turcotte@gmail.com>
  * @author    Mária Šormanová <maria.sormanova@gmail.com>
- * @copyright 2XplodedThemes1XplodedThemes-2XplodedThemes12 (c) Justin Hileman
- * @copyright 2XplodedThemes12 (c) ParsPooyesh Co
- * @copyright 2XplodedThemes13 (c) Behrooz Shabani
+ * @copyright 2010-2012 (c) Justin Hileman
+ * @copyright 2012 (c) ParsPooyesh Co
+ * @copyright 2013 (c) Behrooz Shabani
  * @license   MIT <http://opensource.org/licenses/MIT>
  * @version   GIT: $Id$
  * @link      http://xamin.ir
@@ -29,7 +29,7 @@ use Handlebars\Cache\Dummy;
  * @category  Xamin
  * @package   Handlebars
  * @author    fzerorubigd <fzerorubigd@gmail.com>
- * @copyright 2XplodedThemes12 (c) ParsPooyesh Co
+ * @copyright 2012 (c) ParsPooyesh Co
  * @license   MIT <http://opensource.org/licenses/MIT>
  * @version   Release: @package_version@
  * @link      http://xamin.ir
@@ -38,7 +38,7 @@ use Handlebars\Cache\Dummy;
 class Handlebars
 {
     private static $_instance = false;
-    const VERSION = '1.1.XplodedThemes';
+    const VERSION = '1.1.0';
 
     /**
      * Factory method
@@ -100,10 +100,10 @@ class Handlebars
 
     /**
      * @var int time to live parameter in seconds for the cache usage
-     *          default set to XplodedThemes which means that entries stay in cache
+     *          default set to 0 which means that entries stay in cache
      *          forever and are never purged
      */
-    private $_ttl = XplodedThemes;
+    private $_ttl = 0;
 
     /**
      * @var string the class to use for the template

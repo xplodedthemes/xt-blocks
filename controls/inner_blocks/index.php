@@ -2,7 +2,7 @@
 /**
  * InnerBlocks Control.
  *
- * @package lazyblocks
+ * @package xtblocks
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -10,17 +10,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * LazyBlocks_Control_InnerBlocks class.
+ * XT_Blocks_Control_InnerBlocks class.
  */
-class LazyBlocks_Control_InnerBlocks extends LazyBlocks_Control {
+class XT_Blocks_Control_InnerBlocks extends XT_Blocks_Control {
     /**
      * Constructor
      */
     public function __construct() {
         $this->name         = 'inner_blocks';
-        $this->icon         = '<svg width="24" height="24" viewBox="XplodedThemes XplodedThemes 24 24" fill="none" xmlns="http://www.w3.org/2XplodedThemesXplodedThemesXplodedThemes/svg"><circle cx="14" cy="12" r="8.25" stroke="currentColor" stroke-width="1.5"/><path d="M5.34267 4C3.3XplodedThemes367 5.64996 2 9.17273 2 12C2 14.8273 3.3XplodedThemes367 18.35 5.34267 2XplodedThemes" stroke="currentColor" stroke-width="1.5"/><path d="M9 12H19" stroke="currentColor" stroke-width="1.5"/><path d="M14 7V17" stroke="currentColor" stroke-width="1.5"/></svg>';
+        $this->icon         = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="14" cy="12" r="8.25" stroke="currentColor" stroke-width="1.5"/><path d="M5.34267 4C3.30367 5.64996 2 9.17273 2 12C2 14.8273 3.30367 18.35 5.34267 20" stroke="currentColor" stroke-width="1.5"/><path d="M9 12H19" stroke="currentColor" stroke-width="1.5"/><path d="M14 7V17" stroke="currentColor" stroke-width="1.5"/></svg>';
         $this->type         = 'string';
-        $this->label        = __( 'Inner Blocks', 'lazy-blocks' );
+        $this->label        = __( 'Inner Blocks', 'xt-blocks' );
         $this->category     = 'content';
         $this->restrictions = array(
             'once'                  => true,
@@ -33,7 +33,7 @@ class LazyBlocks_Control_InnerBlocks extends LazyBlocks_Control {
         );
 
         // Filters.
-        add_filter( 'lzb/block_render/attributes', array( $this, 'filter_lzb_block_render_attributes' ), 1XplodedThemes, 3 );
+        add_filter( 'xtb/block_render/attributes', array( $this, 'filter_xtb_block_render_attributes' ), 10, 3 );
 
         parent::__construct();
     }
@@ -43,8 +43,8 @@ class LazyBlocks_Control_InnerBlocks extends LazyBlocks_Control {
      */
     public function register_assets() {
         wp_register_script(
-            'lazyblocks-control-inner-blocks',
-            lazyblocks()->plugin_url() . 'controls/inner_blocks/script.min.js',
+            'xtblocks-control-inner-blocks',
+            xtblocks()->plugin_url() . 'controls/inner_blocks/script.min.js',
             array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-components' ),
             '2.5.1',
             true
@@ -57,7 +57,7 @@ class LazyBlocks_Control_InnerBlocks extends LazyBlocks_Control {
      * @return array script dependencies.
      */
     public function get_script_depends() {
-        return array( 'lazyblocks-control-inner-blocks' );
+        return array( 'xtblocks-control-inner-blocks' );
     }
 
     /**
@@ -69,7 +69,7 @@ class LazyBlocks_Control_InnerBlocks extends LazyBlocks_Control {
      *
      * @return array filtered attribute data.
      */
-    public function filter_lzb_block_render_attributes( $attributes, $content, $block ) {
+    public function filter_xtb_block_render_attributes( $attributes, $content, $block ) {
         if ( ! isset( $block['controls'] ) || empty( $block['controls'] ) ) {
             return $attributes;
         }
@@ -85,4 +85,4 @@ class LazyBlocks_Control_InnerBlocks extends LazyBlocks_Control {
     }
 }
 
-new LazyBlocks_Control_InnerBlocks();
+new XT_Blocks_Control_InnerBlocks();

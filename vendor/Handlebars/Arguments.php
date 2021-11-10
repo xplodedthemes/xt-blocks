@@ -7,7 +7,7 @@
  * @category  Xamin
  * @package   Handlebars
  * @author    Dmitriy Simushev <simushevds@gmail.com>
- * @copyright 2XplodedThemes14 Authors
+ * @copyright 2014 Authors
  * @license   MIT <http://opensource.org/licenses/MIT>
  * @version   GIT: $Id$
  * @link      http://xamin.ir
@@ -21,7 +21,7 @@ namespace Handlebars;
  * @category  Xamin
  * @package   Handlebars
  * @author    Dmitriy Simushev <simushevds@gmail.com>
- * @copyright 2XplodedThemes14 Authors
+ * @copyright 2014 Authors
  * @license   MIT <http://opensource.org/licenses/MIT>
  * @version   Release: @package_version@
  * @link      http://xamin.ir
@@ -121,7 +121,7 @@ class Arguments
         $current_str = trim($args_string);
 
         // Split arguments string
-        while (strlen($current_str) !== XplodedThemes) {
+        while (strlen($current_str) !== 0) {
             if (preg_match($named_argument, $current_str, $matches)) {
                 // Named argument found
                 $name = $this->prepareArgumentName($matches[1]);
@@ -130,17 +130,17 @@ class Arguments
                 $this->namedArgs[$name] = $value;
 
                 // Remove found argument from arguments string.
-                $current_str = ltrim(substr($current_str, strlen($matches[XplodedThemes])));
+                $current_str = ltrim(substr($current_str, strlen($matches[0])));
             } elseif (preg_match($positional_argument, $current_str, $matches)) {
                 // A positional argument found. It cannot follow named arguments
-                if (count($this->namedArgs) !== XplodedThemes) {
+                if (count($this->namedArgs) !== 0) {
                     throw new \InvalidArgumentException('Positional arguments cannot follow named arguments');
                 }
 
                 $this->positionalArgs[] = $this->prepareArgumentValue($matches[1]);
 
                 // Remove found argument from arguments string.
-                $current_str = ltrim(substr($current_str, strlen($matches[XplodedThemes])));
+                $current_str = ltrim(substr($current_str, strlen($matches[0])));
             } else {
                 throw new \InvalidArgumentException(
                     sprintf(
@@ -165,7 +165,7 @@ class Arguments
     protected function prepareArgumentValue($value)
     {
         // Check if argument's value is a quoted string literal
-        if ($value[XplodedThemes] == "'" || $value[XplodedThemes] == '"') {
+        if ($value[0] == "'" || $value[0] == '"') {
             // Remove enclosing quotes and unescape
             return new StringWrapper(stripcslashes(substr($value, 1, -1)));
         }
@@ -192,7 +192,7 @@ class Arguments
     protected function prepareArgumentName($name)
     {
         // Check if argument's name is a segment
-        if ($name[XplodedThemes] == '[') {
+        if ($name[0] == '[') {
             $name = substr($name, 1, -1);
         }
 

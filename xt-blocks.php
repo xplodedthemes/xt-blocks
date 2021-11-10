@@ -1,27 +1,27 @@
 <?php
 /**
- * Plugin Name:  Lazy Blocks
+ * Plugin Name:  XT Blocks
  * Description:  Gutenberg blocks visual constructor. Custom meta fields or blocks with output without hard coding.
  * Version:      2.5.1
- * Author:       nK
- * Author URI:   https://nkdev.info/
+ * Author:       XplodedThemes
+ * Author URI:   https://xplodedthemes.com/
  * License:      GPLv2 or later
- * License URI:  https://www.gnu.org/licenses/gpl-2.XplodedThemes.html
- * Text Domain:  lazy-blocks
+ * License URI:  https://www.gnu.org/licenses/gpl-2.0.html
+ * Text Domain:  xt-blocks
  *
- * @package lazyblocks
+ * @package xtblocks
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-if ( ! class_exists( 'LazyBlocks' ) ) :
+if ( ! class_exists( 'XT_Blocks' ) ) :
 
     /**
-     * LazyBlocks Class
+     * XT_Blocks Class
      */
-    class LazyBlocks {
+    class XT_Blocks {
         /**
          * The single class instance.
          *
@@ -58,40 +58,40 @@ if ( ! class_exists( 'LazyBlocks' ) ) :
         /**
          * Icons class object.
          *
-         * @var LazyBlocks_Icons
+         * @var XT_Blocks_Icons
          */
         private $icons;
 
         /**
          * Controls class object.
          *
-         * @var LazyBlocks_Controls
+         * @var XT_Blocks_Controls
          */
         private $controls;
 
         /**
          * Blocks class object.
          *
-         * @var LazyBlocks_Blocks
+         * @var XT_Blocks_Blocks
          */
         private $blocks;
 
         /**
          * Templates class object.
          *
-         * @var LazyBlocks_Templates
+         * @var XT_Blocks_Templates
          */
         private $templates;
 
         /**
          * Tools class object.
          *
-         * @var LazyBlocks_Tools
+         * @var XT_Blocks_Tools
          */
         private $tools;
 
         /**
-         * LazyBlocks constructor.
+         * XT_Blocks constructor.
          */
         public function __construct() {
             /* We do nothing here! */
@@ -101,7 +101,7 @@ if ( ! class_exists( 'LazyBlocks' ) ) :
          * Activation Hook
          */
         public function activation_hook() {
-            LazyBlocks_Dummy::add();
+            XT_Blocks_Dummy::add();
         }
 
         /**
@@ -119,32 +119,32 @@ if ( ! class_exists( 'LazyBlocks' ) ) :
             $this->load_text_domain();
             $this->include_dependencies();
 
-            $this->icons     = new LazyBlocks_Icons();
-            $this->controls  = new LazyBlocks_Controls();
-            $this->blocks    = new LazyBlocks_Blocks();
-            $this->templates = new LazyBlocks_Templates();
-            $this->tools     = new LazyBlocks_Tools();
+            $this->icons     = new XT_Blocks_Icons();
+            $this->controls  = new XT_Blocks_Controls();
+            $this->blocks    = new XT_Blocks_Blocks();
+            $this->templates = new XT_Blocks_Templates();
+            $this->tools     = new XT_Blocks_Tools();
         }
 
         /**
          * Get plugin_path.
          */
         public function plugin_path() {
-            return apply_filters( 'lzb/plugin_path', $this->plugin_path );
+            return apply_filters( 'xtb/plugin_path', $this->plugin_path );
         }
 
         /**
          * Get plugin_url.
          */
         public function plugin_url() {
-            return apply_filters( 'lzb/plugin_url', $this->plugin_url );
+            return apply_filters( 'xtb/plugin_url', $this->plugin_url );
         }
 
         /**
          * Sets the text domain with the plugin translated into other languages.
          */
         public function load_text_domain() {
-            load_plugin_textdomain( 'lazy-blocks', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+            load_plugin_textdomain( 'xt-blocks', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
         }
 
         /**
@@ -167,42 +167,42 @@ if ( ! class_exists( 'LazyBlocks' ) ) :
         }
 
         /**
-         * Get lazyblocks icons object.
+         * Get xtblocks icons object.
          */
         public function icons() {
             return $this->icons;
         }
 
         /**
-         * Get lazyblocks controls object.
+         * Get xtblocks controls object.
          */
         public function controls() {
             return $this->controls;
         }
 
         /**
-         * Get lazyblocks blocks object.
+         * Get xtblocks blocks object.
          */
         public function blocks() {
             return $this->blocks;
         }
 
         /**
-         * Get lazyblocks templates object.
+         * Get xtblocks templates object.
          */
         public function templates() {
             return $this->templates;
         }
 
         /**
-         * Get lazyblocks tools object.
+         * Get xtblocks tools object.
          */
         public function tools() {
             return $this->tools;
         }
 
         /**
-         * Add lazyblocks block.
+         * Add xtblocks block.
          *
          * @param array $data - block data.
          */
@@ -211,7 +211,7 @@ if ( ! class_exists( 'LazyBlocks' ) ) :
         }
 
         /**
-         * Add lazyblocks template.
+         * Add xtblocks template.
          *
          * @param array $data - template data.
          */
@@ -223,18 +223,18 @@ if ( ! class_exists( 'LazyBlocks' ) ) :
     /**
      * The main cycle of the plugin.
      *
-     * @return null|LazyBlocks
+     * @return null|XT_Blocks
      */
-    function lazyblocks() {
-        return LazyBlocks::instance();
+    function xtblocks() {
+        return XT_Blocks::instance();
     }
 
     // Initialize.
-    lazyblocks();
+    xtblocks();
 
     // Activation / Deactivation hooks.
-    register_activation_hook( __FILE__, array( lazyblocks(), 'activation_hook' ) );
-    register_deactivation_hook( __FILE__, array( lazyblocks(), 'deactivation_hook' ) );
+    register_activation_hook( __FILE__, array( xtblocks(), 'activation_hook' ) );
+    register_deactivation_hook( __FILE__, array( xtblocks(), 'deactivation_hook' ) );
 
     /**
      * Function to get meta value with some improvements for Lazyblocks metas.
@@ -245,9 +245,9 @@ if ( ! class_exists( 'LazyBlocks' ) ) :
      * @return array|mixed|object
      */
     // phpcs:ignore
-    function get_lzb_meta( $name, $id = null ) {
-        // global variable used to fix `get_lzb_meta` call inside block preview in editor.
-        global $lzb_preview_block_data;
+    function get_xtb_meta( $name, $id = null ) {
+        // global variable used to fix `get_xtb_meta` call inside block preview in editor.
+        global $xtb_preview_block_data;
 
         $control_data = null;
 
@@ -260,7 +260,7 @@ if ( ! class_exists( 'LazyBlocks' ) ) :
         }
 
         // Find control data by meta name.
-        $blocks = lazyblocks()->blocks()->get_blocks();
+        $blocks = xtblocks()->blocks()->get_blocks();
         foreach ( $blocks as $block ) {
             if ( isset( $block['controls'] ) && is_array( $block['controls'] ) ) {
                 foreach ( $block['controls'] as $control ) {
@@ -286,17 +286,17 @@ if ( ! class_exists( 'LazyBlocks' ) ) :
         $result = null;
 
         if (
-            isset( $lzb_preview_block_data ) &&
-            is_array( $lzb_preview_block_data ) &&
+            isset( $xtb_preview_block_data ) &&
+            is_array( $xtb_preview_block_data ) &&
             isset( $control_data['name'] ) &&
-            isset( $lzb_preview_block_data['block_attributes'][ $control_data['name'] ] )
+            isset( $xtb_preview_block_data['block_attributes'][ $control_data['name'] ] )
         ) {
-            $result = $lzb_preview_block_data['block_attributes'][ $control_data['name'] ];
+            $result = $xtb_preview_block_data['block_attributes'][ $control_data['name'] ];
         } elseif ( $id ) {
             $result = get_post_meta( $id, $name, true );
         }
 
-        return apply_filters( 'lzb/get_meta', $result, $name, $id, $control_data );
+        return apply_filters( 'xtb/get_meta', $result, $name, $id, $control_data );
     }
 
 endif;

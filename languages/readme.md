@@ -2,16 +2,16 @@
 
 Available filenames for translation:
 
-* `lazy-blocks-en_US-lazyblocks-translation.json`
+* `xt-blocks-en_US-xtblocks-translation.json`
 
 JSON content example:
 
       {
-          "domain": "lazy-blocks",
+          "domain": "xt-blocks",
           "locale_data": {
-              "lazy-blocks": {
+              "xt-blocks": {
                   "": {
-                      "domain": "lazy-blocks"
+                      "domain": "xt-blocks"
                   },
                   "Alongside Text": [
                       "Alongside Text Translated"

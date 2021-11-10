@@ -10,8 +10,8 @@
  * @author    fzerorubigd <fzerorubigd@gmail.com>
  * @author    Behrooz Shabani <everplays@gmail.com>
  * @author    Mária Šormanová <maria.sormanova@gmail.com>
- * @copyright 2XplodedThemes12 (c) ParsPooyesh Co
- * @copyright 2XplodedThemes13 (c) Behrooz Shabani
+ * @copyright 2012 (c) ParsPooyesh Co
+ * @copyright 2013 (c) Behrooz Shabani
  * @license   MIT <http://opensource.org/licenses/MIT>
  * @version   GIT: $Id$
  * @link      http://xamin.ir
@@ -26,7 +26,7 @@ use Handlebars\Cache;
  * @category  Xamin
  * @package   Handlebars
  * @author    fzerorubigd <fzerorubigd@gmail.com>
- * @copyright 2XplodedThemes12 (c) ParsPooyesh Co
+ * @copyright 2012 (c) ParsPooyesh Co
  * @license   MIT <http://opensource.org/licenses/MIT>
  * @version   Release: @package_version@
  * @link      http://xamin.ir
@@ -63,7 +63,7 @@ class Dummy implements Cache
      *
      * @return void
      */
-    public function set($name, $value, $ttl = XplodedThemes)
+    public function set($name, $value, $ttl = 0)
     {
         $this->_cache[$name] = $value;
     }

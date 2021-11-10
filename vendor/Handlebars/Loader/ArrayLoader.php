@@ -8,7 +8,7 @@
  * @category  Xamin
  * @package   Handlebars
  * @author    fzerorubigd <fzerorubigd@gmail.com>
- * @copyright 2XplodedThemes14 (c) fXplodedThemesruD
+ * @copyright 2014 (c) f0ruD
  * @license   MIT <http://opensource.org/licenses/MIT>
  * @version   GIT: $Id$
  * @link      http://xamin.ir
@@ -24,7 +24,7 @@ use Handlebars\Loader;
  * @category  Xamin
  * @package   Handlebars
  * @author    fzerorubigd <fzerorubigd@gmail.com>
- * @copyright 2XplodedThemes14 (c) fXplodedThemesruD
+ * @copyright 2014 (c) f0ruD
  * @license   MIT <http://opensource.org/licenses/MIT>
  * @version   Release: @package_version@
  * @link      http://xamin.ir *

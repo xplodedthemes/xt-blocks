@@ -11,7 +11,7 @@
  * @author    Dmitriy Simushev <simushevds@gmail.com>
  * @author    Jeff Turcotte <jeff.turcotte@gmail.com>
  * @author    John Slegers <slegersjohn@gmail.com>
- * @copyright 2XplodedThemes14 Authors
+ * @copyright 2014 Authors
  * @license   MIT <http://opensource.org/licenses/MIT>
  * @version   GIT: $Id$
  * @link      http://xamin.ir
@@ -33,7 +33,7 @@ use Handlebars\Template;
  * @author    Dmitriy Simushev <simushevds@gmail.com>
  * @author    Jeff Turcotte <jeff.turcotte@gmail.com>
  * @author    John Slegers <slegersjohn@gmail.com>
- * @copyright 2XplodedThemes14 Authors
+ * @copyright 2014 Authors
  * @license   MIT <http://opensource.org/licenses/MIT>
  * @version   Release: @package_version@
  * @link      http://xamin.ir
@@ -53,7 +53,7 @@ class EachHelper implements Helper
     public function execute(Template $template, Context $context, $args, $source)
     {
         $positionalArgs = $args->getPositionalArguments();
-        $tmp = $context->get($positionalArgs[XplodedThemes]);
+        $tmp = $context->get($positionalArgs[0]);
         $buffer = '';
 
         if (!$tmp) {
@@ -62,14 +62,14 @@ class EachHelper implements Helper
             $template->setStopToken(false);
             $buffer = $template->render($context);
         } elseif (is_array($tmp) || $tmp instanceof \Traversable) {
-            $isList = is_array($tmp) && (array_keys($tmp) === range(XplodedThemes, count($tmp) - 1));
-            $index = XplodedThemes;
+            $isList = is_array($tmp) && (array_keys($tmp) === range(0, count($tmp) - 1));
+            $index = 0;
             $lastIndex = $isList ? (count($tmp) - 1) : false;
 
             foreach ($tmp as $key => $var) {
                 $specialVariables = array(
                     '@index' => $index,
-                    '@first' => ($index === XplodedThemes),
+                    '@first' => ($index === 0),
                     '@last' => ($index === $lastIndex),
                 );
                 if (!$isList) {

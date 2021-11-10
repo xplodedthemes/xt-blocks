@@ -2,7 +2,7 @@
 /**
  * Gallery Control.
  *
- * @package lazyblocks
+ * @package xtblocks
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -10,17 +10,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * LazyBlocks_Control_Gallery class.
+ * XT_Blocks_Control_Gallery class.
  */
-class LazyBlocks_Control_Gallery extends LazyBlocks_Control {
+class XT_Blocks_Control_Gallery extends XT_Blocks_Control {
     /**
      * Constructor
      */
     public function __construct() {
         $this->name         = 'gallery';
-        $this->icon         = '<svg width="24" height="24" viewBox="XplodedThemes XplodedThemes 24 24" fill="none" xmlns="http://www.w3.org/2XplodedThemesXplodedThemesXplodedThemes/svg"><path d="M21 8V19C21 2XplodedThemes.1XplodedThemes46 2XplodedThemes.1XplodedThemes57 21 19.XplodedThemesXplodedThemes11 21C15.8975 21 9.87435 21 6 21" stroke="currentColor" stroke-width="1.5"/><path d="M16.375 3.75H4.625C4.14175 3.75 3.75 4.14175 3.75 4.625V16.375C3.75 16.8582 4.14175 17.25 4.625 17.25H16.375C16.8582 17.25 17.25 16.8582 17.25 16.375V4.625C17.25 4.14175 16.8582 3.75 16.375 3.75Z" stroke="currentColor" stroke-width="1.5"/><path d="M4 14L7.71429 12L1XplodedThemes.5 13.3333L13.75 11L17 13.3333" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>';
+        $this->icon         = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 8V19C21 20.1046 20.1057 21 19.0011 21C15.8975 21 9.87435 21 6 21" stroke="currentColor" stroke-width="1.5"/><path d="M16.375 3.75H4.625C4.14175 3.75 3.75 4.14175 3.75 4.625V16.375C3.75 16.8582 4.14175 17.25 4.625 17.25H16.375C16.8582 17.25 17.25 16.8582 17.25 16.375V4.625C17.25 4.14175 16.8582 3.75 16.375 3.75Z" stroke="currentColor" stroke-width="1.5"/><path d="M4 14L7.71429 12L10.5 13.3333L13.75 11L17 13.3333" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>';
         $this->type         = 'string';
-        $this->label        = __( 'Gallery', 'lazy-blocks' );
+        $this->label        = __( 'Gallery', 'xt-blocks' );
         $this->category     = 'content';
         $this->restrictions = array(
             'default_settings' => false,
@@ -30,8 +30,8 @@ class LazyBlocks_Control_Gallery extends LazyBlocks_Control {
         );
 
         // Filters.
-        add_filter( 'lzb/block_render/attributes', array( $this, 'filter_lzb_block_render_attributes' ), 1XplodedThemes, 3 );
-        add_filter( 'lzb/get_meta', array( $this, 'filter_get_lzb_meta_json' ), 1XplodedThemes, 4 );
+        add_filter( 'xtb/block_render/attributes', array( $this, 'filter_xtb_block_render_attributes' ), 10, 3 );
+        add_filter( 'xtb/get_meta', array( $this, 'filter_get_xtb_meta_json' ), 10, 4 );
 
         parent::__construct();
     }
@@ -41,8 +41,8 @@ class LazyBlocks_Control_Gallery extends LazyBlocks_Control {
      */
     public function register_assets() {
         wp_register_script(
-            'lazyblocks-control-gallery',
-            lazyblocks()->plugin_url() . 'controls/gallery/script.min.js',
+            'xtblocks-control-gallery',
+            xtblocks()->plugin_url() . 'controls/gallery/script.min.js',
             array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-components' ),
             '2.5.1',
             true
@@ -55,7 +55,7 @@ class LazyBlocks_Control_Gallery extends LazyBlocks_Control {
      * @return array script dependencies.
      */
     public function get_script_depends() {
-        return array( 'lazyblocks-control-gallery' );
+        return array( 'xtblocks-control-gallery' );
     }
 
     /**
@@ -108,7 +108,7 @@ class LazyBlocks_Control_Gallery extends LazyBlocks_Control {
      *
      * @return array filtered attribute data.
      */
-    public function filter_lzb_block_render_attributes( $attributes, $content, $block ) {
+    public function filter_xtb_block_render_attributes( $attributes, $content, $block ) {
         if ( ! isset( $block['controls'] ) || empty( $block['controls'] ) ) {
             return $attributes;
         }
@@ -134,7 +134,7 @@ class LazyBlocks_Control_Gallery extends LazyBlocks_Control {
     }
 
     /**
-     * Change get_lzb_meta output to array.
+     * Change get_xtb_meta output to array.
      *
      * @param string $result - meta data.
      * @param string $name - meta name.
@@ -143,7 +143,7 @@ class LazyBlocks_Control_Gallery extends LazyBlocks_Control {
      *
      * @return array filtered meta.
      */
-    public function filter_get_lzb_meta_json( $result, $name, $id, $control ) {
+    public function filter_get_xtb_meta_json( $result, $name, $id, $control ) {
         if ( ! $control || $this->name !== $control['type'] || ! is_string( $result ) ) {
             return $result;
         }
@@ -164,4 +164,4 @@ class LazyBlocks_Control_Gallery extends LazyBlocks_Control {
     }
 }
 
-new LazyBlocks_Control_Gallery();
+new XT_Blocks_Control_Gallery();

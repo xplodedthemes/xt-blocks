@@ -2,7 +2,7 @@
 /**
  * Repeater Control.
  *
- * @package lazyblocks
+ * @package xtblocks
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -10,17 +10,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * LazyBlocks_Control_Repeater class.
+ * XT_Blocks_Control_Repeater class.
  */
-class LazyBlocks_Control_Repeater extends LazyBlocks_Control {
+class XT_Blocks_Control_Repeater extends XT_Blocks_Control {
     /**
      * Constructor
      */
     public function __construct() {
         $this->name         = 'repeater';
-        $this->icon         = '<svg width="24" height="24" viewBox="XplodedThemes XplodedThemes 24 24" fill="none" xmlns="http://www.w3.org/2XplodedThemesXplodedThemesXplodedThemes/svg"><path d="M6.2 3.75H17.8C18.6XplodedThemesXplodedThemes9 3.75 19.25 4.3XplodedThemes964 19.25 5V9C19.25 9.69XplodedThemes36 18.6XplodedThemesXplodedThemes9 1XplodedThemes.25 17.8 1XplodedThemes.25H6.2C5.39918 1XplodedThemes.25 4.75 9.69XplodedThemes36 4.75 9V5C4.75 4.3XplodedThemes964 5.39918 3.75 6.2 3.75Z" stroke="currentColor" stroke-width="1.5"/><path fill-rule="evenodd" clip-rule="evenodd" d="M8.5 7.75H7V6.25H8.5V7.75Z" fill="currentColor"/><path d="M6.2 13.75H17.8C18.6XplodedThemesXplodedThemes9 13.75 19.25 14.3XplodedThemes96 19.25 15V19C19.25 19.69XplodedThemes4 18.6XplodedThemesXplodedThemes9 2XplodedThemes.25 17.8 2XplodedThemes.25H6.2C5.39918 2XplodedThemes.25 4.75 19.69XplodedThemes4 4.75 19V15C4.75 14.3XplodedThemes96 5.39918 13.75 6.2 13.75Z" stroke="currentColor" stroke-width="1.5"/><path fill-rule="evenodd" clip-rule="evenodd" d="M8.5 17.75H7V16.25H8.5V17.75Z" fill="currentColor"/></svg>';
+        $this->icon         = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.2 3.75H17.8C18.6009 3.75 19.25 4.30964 19.25 5V9C19.25 9.69036 18.6009 10.25 17.8 10.25H6.2C5.39918 10.25 4.75 9.69036 4.75 9V5C4.75 4.30964 5.39918 3.75 6.2 3.75Z" stroke="currentColor" stroke-width="1.5"/><path fill-rule="evenodd" clip-rule="evenodd" d="M8.5 7.75H7V6.25H8.5V7.75Z" fill="currentColor"/><path d="M6.2 13.75H17.8C18.6009 13.75 19.25 14.3096 19.25 15V19C19.25 19.6904 18.6009 20.25 17.8 20.25H6.2C5.39918 20.25 4.75 19.6904 4.75 19V15C4.75 14.3096 5.39918 13.75 6.2 13.75Z" stroke="currentColor" stroke-width="1.5"/><path fill-rule="evenodd" clip-rule="evenodd" d="M8.5 17.75H7V16.25H8.5V17.75Z" fill="currentColor"/></svg>';
         $this->type         = 'string';
-        $this->label        = __( 'Repeater', 'lazy-blocks' );
+        $this->label        = __( 'Repeater', 'xt-blocks' );
         $this->category     = 'layout';
         $this->restrictions = array(
             'as_child'          => false,
@@ -38,9 +38,9 @@ class LazyBlocks_Control_Repeater extends LazyBlocks_Control {
         );
 
         // Filters.
-        add_filter( 'lzb/prepare_block_attribute', array( $this, 'filter_lzb_prepare_block_attribute' ), 1XplodedThemes, 5 );
-        add_filter( 'lzb/block_render/attributes', array( $this, 'filter_lzb_block_render_attributes' ), 1XplodedThemes, 3 );
-        add_filter( 'lzb/get_meta', array( $this, 'filter_get_lzb_meta_json' ), 1XplodedThemes, 4 );
+        add_filter( 'xtb/prepare_block_attribute', array( $this, 'filter_xtb_prepare_block_attribute' ), 10, 5 );
+        add_filter( 'xtb/block_render/attributes', array( $this, 'filter_xtb_block_render_attributes' ), 10, 3 );
+        add_filter( 'xtb/get_meta', array( $this, 'filter_get_xtb_meta_json' ), 10, 4 );
 
         parent::__construct();
     }
@@ -50,8 +50,8 @@ class LazyBlocks_Control_Repeater extends LazyBlocks_Control {
      */
     public function register_assets() {
         wp_register_script(
-            'lazyblocks-control-repeater',
-            lazyblocks()->plugin_url() . 'controls/repeater/script.min.js',
+            'xtblocks-control-repeater',
+            xtblocks()->plugin_url() . 'controls/repeater/script.min.js',
             array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-components' ),
             '2.5.1',
             true
@@ -64,7 +64,7 @@ class LazyBlocks_Control_Repeater extends LazyBlocks_Control {
      * @return array script dependencies.
      */
     public function get_script_depends() {
-        return array( 'lazyblocks-control-repeater' );
+        return array( 'xtblocks-control-repeater' );
     }
 
     /**
@@ -78,7 +78,7 @@ class LazyBlocks_Control_Repeater extends LazyBlocks_Control {
      *
      * @return array filtered attribute data.
      */
-    public function filter_lzb_prepare_block_attribute( $attribute_data, $control, $controls, $control_id, $block ) {
+    public function filter_xtb_prepare_block_attribute( $attribute_data, $control, $controls, $control_id, $block ) {
         if (
             ! $control ||
             ! isset( $control['type'] ) ||
@@ -88,7 +88,7 @@ class LazyBlocks_Control_Repeater extends LazyBlocks_Control {
         }
 
         $default_val  = array();
-        $inner_blocks = lazyblocks()->blocks()->prepare_block_attributes( $controls, $control_id, $block );
+        $inner_blocks = xtblocks()->blocks()->prepare_block_attributes( $controls, $control_id, $block );
 
         foreach ( $inner_blocks as $n => $inner_block ) {
             $default_val[ $n ] = $inner_blocks[ $n ]['default'];
@@ -108,7 +108,7 @@ class LazyBlocks_Control_Repeater extends LazyBlocks_Control {
      *
      * @return array filtered attribute data.
      */
-    public function filter_lzb_block_render_attributes( $attributes, $content, $block ) {
+    public function filter_xtb_block_render_attributes( $attributes, $content, $block ) {
         if ( ! isset( $block['controls'] ) || empty( $block['controls'] ) ) {
             return $attributes;
         }
@@ -124,7 +124,7 @@ class LazyBlocks_Control_Repeater extends LazyBlocks_Control {
     }
 
     /**
-     * Change get_lzb_meta output to array.
+     * Change get_xtb_meta output to array.
      *
      * @param string $result - meta data.
      * @param string $name - meta name.
@@ -133,7 +133,7 @@ class LazyBlocks_Control_Repeater extends LazyBlocks_Control {
      *
      * @return array filtered meta.
      */
-    public function filter_get_lzb_meta_json( $result, $name, $id, $control ) {
+    public function filter_get_xtb_meta_json( $result, $name, $id, $control ) {
         if ( ! $control || $this->name !== $control['type'] || ! is_string( $result ) ) {
             return $result;
         }
@@ -142,4 +142,4 @@ class LazyBlocks_Control_Repeater extends LazyBlocks_Control {
     }
 }
 
-new LazyBlocks_Control_Repeater();
+new XT_Blocks_Control_Repeater();

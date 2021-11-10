@@ -2,7 +2,7 @@
 /**
  * Migrations
  *
- * @package lazy-blocks
+ * @package xt-blocks
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -10,9 +10,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Class LazyBlocks_Migration
+ * Class XT_Blocks_Migration
  */
-class LazyBlocks_Migration {
+class XT_Blocks_Migration {
     /**
      * The version.
      *
@@ -25,10 +25,10 @@ class LazyBlocks_Migration {
      *
      * @var string
      */
-    protected $initial_version = '2.XplodedThemes.1XplodedThemes';
+    protected $initial_version = '2.0.10';
 
     /**
-     * LazyBlocks_Extend constructor.
+     * XT_Blocks_Extend constructor.
      */
     public function __construct() {
         if ( is_admin() ) {
@@ -43,7 +43,7 @@ class LazyBlocks_Migration {
      */
     public function init() {
         // Migration code added after `$this->initial_version` plugin version.
-        $saved_version   = get_option( 'lzb_db_version', $this->initial_version );
+        $saved_version   = get_option( 'xtb_db_version', $this->initial_version );
         $current_version = $this->version;
 
         foreach ( $this->get_migrations() as $migration ) {
@@ -53,7 +53,7 @@ class LazyBlocks_Migration {
         }
 
         if ( version_compare( $saved_version, $current_version, '<' ) ) {
-            update_option( 'lzb_db_version', $current_version );
+            update_option( 'xtb_db_version', $current_version );
         }
     }
 
@@ -65,12 +65,12 @@ class LazyBlocks_Migration {
     public function get_migrations() {
         return array(
             array(
-                'version' => '2.5.XplodedThemes',
-                'cb'      => array( $this, 'v_2_5_XplodedThemes' ),
+                'version' => '2.5.0',
+                'cb'      => array( $this, 'v_2_5_0' ),
             ),
             array(
-                'version' => '2.1.XplodedThemes',
-                'cb'      => array( $this, 'v_2_1_XplodedThemes' ),
+                'version' => '2.1.0',
+                'cb'      => array( $this, 'v_2_1_0' ),
             ),
         );
     }
@@ -78,12 +78,12 @@ class LazyBlocks_Migration {
     /**
      * Convert old templates to new one.
      */
-    public function v_2_5_XplodedThemes() {
-        // get all lazyblocks_templates post types.
-        // Don't use WP_Query on the admin side https://core.trac.wordpress.org/ticket/184XplodedThemes8 .
+    public function v_2_5_0() {
+        // get all xtblocks_templates post types.
+        // Don't use WP_Query on the admin side https://core.trac.wordpress.org/ticket/18408 .
         $templates = get_posts(
             array(
-                'post_type'      => 'lazyblocks_templates',
+                'post_type'      => 'xtblocks_templates',
                 // phpcs:ignore
                 'posts_per_page' => -1,
                 'showposts'      => -1,
@@ -93,7 +93,7 @@ class LazyBlocks_Migration {
 
         if ( $templates ) {
             foreach ( $templates as $template ) {
-                $data = get_post_meta( $template->ID, 'lzb_template_data', true );
+                $data = get_post_meta( $template->ID, 'xtb_template_data', true );
 
                 if ( ! $data ) {
                     continue;
@@ -108,14 +108,14 @@ class LazyBlocks_Migration {
                         $result_blocks[] = array( $block['name'] );
                     }
 
-                    update_post_meta( $template->ID, '_lzb_template_blocks', rawurlencode( wp_json_encode( $result_blocks ) ) );
-                    update_post_meta( $template->ID, '_lzb_template_convert_blocks_to_content', true );
+                    update_post_meta( $template->ID, '_xtb_template_blocks', rawurlencode( wp_json_encode( $result_blocks ) ) );
+                    update_post_meta( $template->ID, '_xtb_template_convert_blocks_to_content', true );
                 }
 
-                update_post_meta( $template->ID, '_lzb_template_lock', $data['template_lock'] );
-                update_post_meta( $template->ID, '_lzb_template_post_types', array( $data['post_type'] ) );
+                update_post_meta( $template->ID, '_xtb_template_lock', $data['template_lock'] );
+                update_post_meta( $template->ID, '_xtb_template_post_types', array( $data['post_type'] ) );
 
-                delete_post_meta( $template->ID, 'lzb_template_data' );
+                delete_post_meta( $template->ID, 'xtb_template_data' );
             }
 
             wp_reset_postdata();
@@ -123,27 +123,27 @@ class LazyBlocks_Migration {
     }
 
     /**
-     * Remove deprecated 'code_use_php' option and add new one 'code_output_method' to lazyblocks post type.
+     * Remove deprecated 'code_use_php' option and add new one 'code_output_method' to xtblocks post type.
      */
-    public function v_2_1_XplodedThemes() {
-        // Get all available lazyblocks.
-        // Don't use WP_Query on the admin side https://core.trac.wordpress.org/ticket/184XplodedThemes8.
-        $lzb_query = get_posts(
+    public function v_2_1_0() {
+        // Get all available xtblocks.
+        // Don't use WP_Query on the admin side https://core.trac.wordpress.org/ticket/18408.
+        $xtb_query = get_posts(
             array(
-                'post_type'      => 'lazyblocks',
+                'post_type'      => 'xtblocks',
                 'posts_per_page' => -1,
                 'showposts'      => -1,
                 'paged'          => -1,
             )
         );
 
-        if ( $lzb_query ) {
-            foreach ( $lzb_query as $post ) {
-                $use_php = get_post_meta( $post->ID, 'lazyblocks_code_use_php', true );
+        if ( $xtb_query ) {
+            foreach ( $xtb_query as $post ) {
+                $use_php = get_post_meta( $post->ID, 'xtblocks_code_use_php', true );
 
                 if ( 'true' === $use_php || 'false' === $use_php ) {
-                    update_post_meta( $post->ID, 'lazyblocks_code_use_php', 'deprecated' );
-                    update_post_meta( $post->ID, 'lazyblocks_code_output_method', 'true' === $use_php ? 'php' : 'html' );
+                    update_post_meta( $post->ID, 'xtblocks_code_use_php', 'deprecated' );
+                    update_post_meta( $post->ID, 'xtblocks_code_output_method', 'true' === $use_php ? 'php' : 'html' );
                 }
             }
             wp_reset_postdata();
@@ -151,4 +151,4 @@ class LazyBlocks_Migration {
     }
 }
 
-new LazyBlocks_Migration();
+new XT_Blocks_Migration();

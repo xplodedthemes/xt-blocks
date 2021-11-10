@@ -2,7 +2,7 @@
 /**
  * Checkbox Control.
  *
- * @package lazyblocks
+ * @package xtblocks
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -10,17 +10,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * LazyBlocks_Control_Checkbox class.
+ * XT_Blocks_Control_Checkbox class.
  */
-class LazyBlocks_Control_Checkbox extends LazyBlocks_Control {
+class XT_Blocks_Control_Checkbox extends XT_Blocks_Control {
     /**
      * Constructor
      */
     public function __construct() {
         $this->name         = 'checkbox';
-        $this->icon         = '<svg width="24" height="24" viewBox="XplodedThemes XplodedThemes 24 24" fill="none" xmlns="http://www.w3.org/2XplodedThemesXplodedThemesXplodedThemes/svg"><path d="M6 4.75H18C18.69XplodedThemes4 4.75 19.25 5.3XplodedThemes964 19.25 6V18C19.25 18.69XplodedThemes4 18.69XplodedThemes4 19.25 18 19.25H6C5.3XplodedThemes964 19.25 4.75 18.69XplodedThemes4 4.75 18V6C4.75 5.3XplodedThemes964 5.3XplodedThemes964 4.75 6 4.75Z" stroke="currentColor" stroke-width="1.5"/><path d="M15.94 8.59219L1XplodedThemes.6727 15.6762L7.61835 13.4XplodedThemes51" stroke="currentColor" stroke-width="1.5"/></svg>';
+        $this->icon         = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 4.75H18C18.6904 4.75 19.25 5.30964 19.25 6V18C19.25 18.6904 18.6904 19.25 18 19.25H6C5.30964 19.25 4.75 18.6904 4.75 18V6C4.75 5.30964 5.30964 4.75 6 4.75Z" stroke="currentColor" stroke-width="1.5"/><path d="M15.94 8.59219L10.6727 15.6762L7.61835 13.4051" stroke="currentColor" stroke-width="1.5"/></svg>';
         $this->type         = 'boolean';
-        $this->label        = __( 'Checkbox', 'lazy-blocks' );
+        $this->label        = __( 'Checkbox', 'xt-blocks' );
         $this->category     = 'choice';
         $this->restrictions = array(
             'default_settings' => false,
@@ -31,7 +31,7 @@ class LazyBlocks_Control_Checkbox extends LazyBlocks_Control {
         );
 
         // Filters.
-        add_filter( 'lzb/prepare_block_attribute', array( $this, 'filter_lzb_prepare_block_attribute' ), 1XplodedThemes, 2 );
+        add_filter( 'xtb/prepare_block_attribute', array( $this, 'filter_xtb_prepare_block_attribute' ), 10, 2 );
 
         parent::__construct();
     }
@@ -41,8 +41,8 @@ class LazyBlocks_Control_Checkbox extends LazyBlocks_Control {
      */
     public function register_assets() {
         wp_register_script(
-            'lazyblocks-control-checkbox',
-            lazyblocks()->plugin_url() . 'controls/checkbox/script.min.js',
+            'xtblocks-control-checkbox',
+            xtblocks()->plugin_url() . 'controls/checkbox/script.min.js',
             array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-components' ),
             '2.5.1',
             true
@@ -55,7 +55,7 @@ class LazyBlocks_Control_Checkbox extends LazyBlocks_Control {
      * @return array script dependencies.
      */
     public function get_script_depends() {
-        return array( 'lazyblocks-control-checkbox' );
+        return array( 'xtblocks-control-checkbox' );
     }
 
     /**
@@ -66,7 +66,7 @@ class LazyBlocks_Control_Checkbox extends LazyBlocks_Control {
      *
      * @return array filtered attribute data.
      */
-    public function filter_lzb_prepare_block_attribute( $attribute_data, $control ) {
+    public function filter_xtb_prepare_block_attribute( $attribute_data, $control ) {
         if (
             ! $control ||
             ! isset( $control['type'] ) ||
@@ -84,4 +84,4 @@ class LazyBlocks_Control_Checkbox extends LazyBlocks_Control {
     }
 }
 
-new LazyBlocks_Control_Checkbox();
+new XT_Blocks_Control_Checkbox();

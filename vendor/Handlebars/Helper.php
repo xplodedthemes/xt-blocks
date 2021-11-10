@@ -7,7 +7,7 @@
  * @category  Xamin
  * @package   Handlebars
  * @author    Jeff Turcotte <jeff.turcotte@gmail.com>
- * @copyright 2XplodedThemes14 Authors
+ * @copyright 2014 Authors
  * @license   MIT <http://opensource.org/licenses/MIT>
  * @version   GIT: $Id$
  * @link      http://xamin.ir
@@ -21,7 +21,7 @@ namespace Handlebars;
  * @category  Xamin
  * @package   Handlebars
  * @author    Jeff Turcotte <jeff.turcotte@gmail.com>
- * @copyright 2XplodedThemes14 Authors
+ * @copyright 2014 Authors
  * @license   MIT <http://opensource.org/licenses/MIT>
  * @version   Release: @package_version@
  * @link      http://xamin.ir

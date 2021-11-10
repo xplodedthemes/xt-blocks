@@ -1,8 +1,8 @@
 <?php
 /**
- * LazyBlocks dummy.
+ * XT_Blocks dummy.
  *
- * @package lazyblocks
+ * @package xtblocks
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -10,18 +10,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * LazyBlocks_Dummy class. Class to work with LazyBlocks Controls.
+ * XT_Blocks_Dummy class. Class to work with XT_Blocks Controls.
  */
-class LazyBlocks_Dummy {
+class XT_Blocks_Dummy {
     /**
      * Name of option that will prevent multiple example blocks creation.
      *
      * @var string
      */
-    private static $option_name = 'lzb_dummy_added';
+    private static $option_name = 'xtb_dummy_added';
 
     /**
-     * LazyBlocks_Dummy constructor.
+     * XT_Blocks_Dummy constructor.
      */
     public function __construct() {}
 
@@ -37,23 +37,23 @@ class LazyBlocks_Dummy {
         // Check if any blocks already added.
         $blocks = get_posts(
             array(
-                'post_type'   => 'lazyblocks',
+                'post_type'   => 'xtblocks',
                 'numberposts' => 1,
                 'post_status' => 'any',
                 'fields'      => 'ids',
             )
         );
 
-        if ( count( $blocks ) > XplodedThemes ) {
+        if ( count( $blocks ) > 0 ) {
             return;
         }
 
         // Create new post.
         $post_id = wp_insert_post(
             array(
-                'post_title'  => esc_attr__( 'Example Block', 'lazy-blocks' ),
+                'post_title'  => esc_attr__( 'Example Block', 'xt-blocks' ),
                 'post_status' => 'draft',
-                'post_type'   => 'lazyblocks',
+                'post_type'   => 'xtblocks',
             )
         );
 
@@ -74,11 +74,11 @@ class LazyBlocks_Dummy {
 <?php endif; ?>';
 
         if ( $post_id ) {
-            lazyblocks()->blocks()->save_meta_boxes(
+            xtblocks()->blocks()->save_meta_boxes(
                 $post_id,
                 array(
-                    'lazyblocks_controls'               => array(
-                        'control_XplodedThemesXplodedThemes5ad74de2' => array(
+                    'xtblocks_controls'               => array(
+                        'control_005ad74de2' => array(
                             'type'                 => 'image',
                             'name'                 => 'image',
                             'default'              => '',
@@ -86,7 +86,7 @@ class LazyBlocks_Dummy {
                             'help'                 => '',
                             'child_of'             => '',
                             'placement'            => 'inspector',
-                            'width'                => '1XplodedThemesXplodedThemes',
+                            'width'                => '100',
                             'hide_if_not_selected' => 'false',
                             'save_in_meta'         => 'false',
                             'save_in_meta_name'    => '',
@@ -94,7 +94,7 @@ class LazyBlocks_Dummy {
                             'placeholder'          => '',
                             'characters_limit'     => '',
                         ),
-                        'control_1729664fXplodedThemes6' => array(
+                        'control_1729664f06' => array(
                             'type'                 => 'text',
                             'name'                 => 'button-label',
                             'default'              => '',
@@ -102,7 +102,7 @@ class LazyBlocks_Dummy {
                             'help'                 => '',
                             'child_of'             => '',
                             'placement'            => 'inspector',
-                            'width'                => '1XplodedThemesXplodedThemes',
+                            'width'                => '100',
                             'hide_if_not_selected' => 'false',
                             'save_in_meta'         => 'false',
                             'save_in_meta_name'    => '',
@@ -118,7 +118,7 @@ class LazyBlocks_Dummy {
                             'help'                 => '',
                             'child_of'             => '',
                             'placement'            => 'inspector',
-                            'width'                => '1XplodedThemesXplodedThemes',
+                            'width'                => '100',
                             'hide_if_not_selected' => 'false',
                             'save_in_meta'         => 'false',
                             'save_in_meta_name'    => '',
@@ -127,18 +127,18 @@ class LazyBlocks_Dummy {
                             'characters_limit'     => '',
                         ),
                     ),
-                    'lazyblocks_slug'                   => 'example-block',
-                    'lazyblocks_icon'                   => '<svg width="24" height="24" viewBox="XplodedThemes XplodedThemes 24 24" fill="none" xmlns="http://www.w3.org/2XplodedThemesXplodedThemesXplodedThemes/svg"><rect opacity="XplodedThemes.25" width="15" height="15" rx="4" transform="matrix(-1 XplodedThemes XplodedThemes 1 22 7)" fill="currentColor" /><rect width="15" height="15" rx="4" transform="matrix(-1 XplodedThemes XplodedThemes 1 17 2)" fill="currentColor" /></svg>',
-                    'lazyblocks_description'            => esc_html__( 'Example block that helps you to get started with Lazy Blocks plugin', 'lazy-blocks' ),
-                    'lazyblocks_keywords'               => 'example,sample,template',
-                    'lazyblocks_category'               => 'common',
-                    'lazyblocks_code_output_method'     => 'php',
-                    'lazyblocks_code_show_preview'      => 'always',
-                    'lazyblocks_code_single_output'     => 'true',
-                    'lazyblocks_code_frontend_html'     => $code,
-                    'lazyblocks_supports_multiple'      => 'true',
-                    'lazyblocks_supports_classname'     => 'true',
-                    'lazyblocks_supports_anchor'        => 'false',
+                    'xtblocks_slug'                   => 'example-block',
+                    'xtblocks_icon'                   => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect opacity="0.25" width="15" height="15" rx="4" transform="matrix(-1 0 0 1 22 7)" fill="currentColor" /><rect width="15" height="15" rx="4" transform="matrix(-1 0 0 1 17 2)" fill="currentColor" /></svg>',
+                    'xtblocks_description'            => esc_html__( 'Example block that helps you to get started with XT Blocks plugin', 'xt-blocks' ),
+                    'xtblocks_keywords'               => 'example,sample,template',
+                    'xtblocks_category'               => 'common',
+                    'xtblocks_code_output_method'     => 'php',
+                    'xtblocks_code_show_preview'      => 'always',
+                    'xtblocks_code_single_output'     => 'true',
+                    'xtblocks_code_frontend_html'     => $code,
+                    'xtblocks_supports_multiple'      => 'true',
+                    'xtblocks_supports_classname'     => 'true',
+                    'xtblocks_supports_anchor'        => 'false',
                 )
             );
 
@@ -147,4 +147,4 @@ class LazyBlocks_Dummy {
     }
 }
 
-new LazyBlocks_Dummy();
+new XT_Blocks_Dummy();

@@ -25,7 +25,7 @@ function date_i18n ( format, timestamp ) {
     // +   improved by: JT
     // +   improved by: Theriault
     // +   improved by: Rafał Kukawski (http://blog.kukawski.pl)
-    // +   bugfixed by: omid (http://phpjs.org/functions/38XplodedThemes:38XplodedThemes#comment_137122)
+    // +   bugfixed by: omid (http://phpjs.org/functions/380:380#comment_137122)
     // +      input by: Martin
     // +      input by: Alex Wilson
     // +      input by: Haravikk
@@ -37,25 +37,25 @@ function date_i18n ( format, timestamp ) {
     // %        note 2: per a timezone specified by date_default_timezone_set(). Implementers might use
     // %        note 2: this.php_js.currentTimezoneOffset and this.php_js.currentTimezoneDST set by that function
     // %        note 2: in order to adjust the dates in this function (or our other date functions!) accordingly
-    // *     example 1: date('H:m:s \\m \\i\\s \\m\\o\\n\\t\\h', 1XplodedThemes624XplodedThemes24XplodedThemesXplodedThemes);
-    // *     returns 1: 'XplodedThemes9:XplodedThemes9:4XplodedThemes m is month'
-    // *     example 2: date('F j, Y, g:i a', 1XplodedThemes624624XplodedThemesXplodedThemes);
-    // *     returns 2: 'September 2, 2XplodedThemesXplodedThemes3, 2:26 am'
-    // *     example 3: date('Y W o', 1XplodedThemes624624XplodedThemesXplodedThemes);
-    // *     returns 3: '2XplodedThemesXplodedThemes3 36 2XplodedThemesXplodedThemes3'
-    // *     example 4: x = date('Y m d', (new Date()).getTime()/1XplodedThemesXplodedThemesXplodedThemes);
-    // *     example 4: (x+'').length == 1XplodedThemes // 2XplodedThemesXplodedThemes9 XplodedThemes1 XplodedThemes9
+    // *     example 1: date('H:m:s \\m \\i\\s \\m\\o\\n\\t\\h', 1062402400);
+    // *     returns 1: '09:09:40 m is month'
+    // *     example 2: date('F j, Y, g:i a', 1062462400);
+    // *     returns 2: 'September 2, 2003, 2:26 am'
+    // *     example 3: date('Y W o', 1062462400);
+    // *     returns 3: '2003 36 2003'
+    // *     example 4: x = date('Y m d', (new Date()).getTime()/1000);
+    // *     example 4: (x+'').length == 10 // 2009 01 09
     // *     returns 4: true
-    // *     example 5: date('W', 11XplodedThemes4534XplodedThemesXplodedThemesXplodedThemes);
+    // *     example 5: date('W', 1104534000);
     // *     returns 5: '53'
-    // *     example 6: date('B t', 11XplodedThemes4534XplodedThemesXplodedThemesXplodedThemes);
+    // *     example 6: date('B t', 1104534000);
     // *     returns 6: '999 31'
-    // *     example 7: date('W U', 129375XplodedThemesXplodedThemesXplodedThemesXplodedThemes.82); // 2XplodedThemes1XplodedThemes-12-31
-    // *     returns 7: '52 129375XplodedThemesXplodedThemesXplodedThemesXplodedThemes'
-    // *     example 8: date('W', 12938364XplodedThemesXplodedThemes); // 2XplodedThemes11-XplodedThemes1-XplodedThemes1
+    // *     example 7: date('W U', 1293750000.82); // 2010-12-31
+    // *     returns 7: '52 1293750000'
+    // *     example 8: date('W', 1293836400); // 2011-01-01
     // *     returns 8: '52'
-    // *     example 9: date('W Y-m-d', 1293974XplodedThemes54); // 2XplodedThemes11-XplodedThemes1-XplodedThemes2
-    // *     returns 9: '52 2XplodedThemes11-XplodedThemes1-XplodedThemes2'
+    // *     example 9: date('W Y-m-d', 1293974054); // 2011-01-02
+    // *     returns 9: '52 2011-01-02'
     var that = this,
         jsdate,
         f,
@@ -72,14 +72,14 @@ function date_i18n ( format, timestamp ) {
         _pad = function (n, c) {
             n = String(n);
             while (n.length < c) {
-                n = 'XplodedThemes' + n;
+                n = '0' + n;
             }
             return n;
         };
     f = {
         // Day
         d: function () {
-            // Day of month w/leading XplodedThemes; XplodedThemes1..31
+            // Day of month w/leading 0; 01..31
             return _pad(f.j(), 2);
         },
         D: function () {
@@ -95,34 +95,34 @@ function date_i18n ( format, timestamp ) {
             return DATE_I18N.day_names[f.w()];
         },
         N: function () {
-            // ISO-86XplodedThemes1 day of week; 1[Mon]..7[Sun]
+            // ISO-8601 day of week; 1[Mon]..7[Sun]
             return f.w() || 7;
         },
         S: function(){
             // Ordinal suffix for day of month; st, nd, rd, th
             var j = f.j(),
-            i = j%1XplodedThemes;
-            if (i <= 3 && parseInt((j%1XplodedThemesXplodedThemes)/1XplodedThemes, 1XplodedThemes) == 1) {
-                i = XplodedThemes;
+            i = j%10;
+            if (i <= 3 && parseInt((j%100)/10, 10) == 1) {
+                i = 0;
             }
             return ['st', 'nd', 'rd'][i - 1] || 'th';
         },
         w: function () {
-            // Day of week; XplodedThemes[Sun]..6[Sat]
+            // Day of week; 0[Sun]..6[Sat]
             return jsdate.getDay();
         },
         z: function () {
-            // Day of year; XplodedThemes..365
+            // Day of year; 0..365
             var a = new Date(f.Y(), f.n() - 1, f.j()),
-            b = new Date(f.Y(), XplodedThemes, 1);
+            b = new Date(f.Y(), 0, 1);
             return Math.round((a - b) / 864e5);
         },
 
         // Week
         W: function () {
-            // ISO-86XplodedThemes1 week number
+            // ISO-8601 week number
             var a = new Date(f.Y(), f.n() - 1, f.j() - f.N() + 3),
-            b = new Date(a.getFullYear(), XplodedThemes, 4);
+            b = new Date(a.getFullYear(), 0, 4);
             return _pad(1 + Math.round((a - b) / 864e5 / 7), 2);
         },
 
@@ -132,7 +132,7 @@ function date_i18n ( format, timestamp ) {
             return DATE_I18N.month_names[f.n() - 1];
         },
         m: function () {
-            // Month w/leading XplodedThemes; XplodedThemes1...12
+            // Month w/leading 0; 01...12
             return _pad(f.n(), 2);
         },
         M: function () {
@@ -145,28 +145,28 @@ function date_i18n ( format, timestamp ) {
         },
         t: function () {
             // Days in month; 28...31
-            return (new Date(f.Y(), f.n(), XplodedThemes)).getDate();
+            return (new Date(f.Y(), f.n(), 0)).getDate();
         },
 
         // Year
         L: function () {
-            // Is leap year?; XplodedThemes or 1
+            // Is leap year?; 0 or 1
             var j = f.Y();
-            return j % 4 === XplodedThemes & j % 1XplodedThemesXplodedThemes !== XplodedThemes | j % 4XplodedThemesXplodedThemes === XplodedThemes;
+            return j % 4 === 0 & j % 100 !== 0 | j % 400 === 0;
         },
         o: function () {
-            // ISO-86XplodedThemes1 year
+            // ISO-8601 year
             var n = f.n(),
             W = f.W(),
             Y = f.Y();
-            return Y + (n === 12 && W < 9 ? 1 : n === 1 && W > 9 ? -1 : XplodedThemes);
+            return Y + (n === 12 && W < 9 ? 1 : n === 1 && W > 9 ? -1 : 0);
         },
         Y: function () {
-            // Full year; e.g. 198XplodedThemes...2XplodedThemes1XplodedThemes
+            // Full year; e.g. 1980...2010
             return jsdate.getFullYear();
         },
         y: function () {
-            // Last two digits of year; XplodedThemesXplodedThemes...99
+            // Last two digits of year; 00...99
             return f.Y().toString().slice(-2);
         },
 
@@ -180,10 +180,10 @@ function date_i18n ( format, timestamp ) {
             return f.a().toUpperCase();
         },
         B: function () {
-            // Swatch Internet time; XplodedThemesXplodedThemesXplodedThemes..999
+            // Swatch Internet time; 000..999
             var H = jsdate.getUTCHours() * 36e2,
             // Hours
-            i = jsdate.getUTCMinutes() * 6XplodedThemes,
+            i = jsdate.getUTCMinutes() * 60,
             // Minutes
             s = jsdate.getUTCSeconds(); // Seconds
             return _pad(Math.floor((H + i + s + 36e2) / 86.4) % 1e3, 3);
@@ -193,28 +193,28 @@ function date_i18n ( format, timestamp ) {
             return f.G() % 12 || 12;
         },
         G: function () {
-            // 24-Hours; XplodedThemes..23
+            // 24-Hours; 0..23
             return jsdate.getHours();
         },
         h: function () {
-            // 12-Hours w/leading XplodedThemes; XplodedThemes1..12
+            // 12-Hours w/leading 0; 01..12
             return _pad(f.g(), 2);
         },
         H: function () {
-            // 24-Hours w/leading XplodedThemes; XplodedThemesXplodedThemes..23
+            // 24-Hours w/leading 0; 00..23
             return _pad(f.G(), 2);
         },
         i: function () {
-            // Minutes w/leading XplodedThemes; XplodedThemesXplodedThemes..59
+            // Minutes w/leading 0; 00..59
             return _pad(jsdate.getMinutes(), 2);
         },
         s: function () {
-            // Seconds w/leading XplodedThemes; XplodedThemesXplodedThemes..59
+            // Seconds w/leading 0; 00..59
             return _pad(jsdate.getSeconds(), 2);
         },
         u: function () {
-            // Microseconds; XplodedThemesXplodedThemesXplodedThemesXplodedThemesXplodedThemesXplodedThemes-999XplodedThemesXplodedThemesXplodedThemes
-            return _pad(jsdate.getMilliseconds() * 1XplodedThemesXplodedThemesXplodedThemes, 6);
+            // Microseconds; 000000-999000
+            return _pad(jsdate.getMilliseconds() * 1000, 6);
         },
 
         // Timezone
@@ -226,42 +226,42 @@ function date_i18n ( format, timestamp ) {
             throw 'Not supported (see source code of date() for timezone on how to add support)';
         },
         I: function () {
-            // DST observed?; XplodedThemes or 1
+            // DST observed?; 0 or 1
             // Compares Jan 1 minus Jan 1 UTC to Jul 1 minus Jul 1 UTC.
             // If they are not equal, then DST is observed.
-            var a = new Date(f.Y(), XplodedThemes),
+            var a = new Date(f.Y(), 0),
             // Jan 1
-            c = Date.UTC(f.Y(), XplodedThemes),
+            c = Date.UTC(f.Y(), 0),
             // Jan 1 UTC
             b = new Date(f.Y(), 6),
             // Jul 1
             d = Date.UTC(f.Y(), 6); // Jul 1 UTC
-            return ((a - c) !== (b - d)) ? 1 : XplodedThemes;
+            return ((a - c) !== (b - d)) ? 1 : 0;
         },
         O: function () {
-            // Difference to GMT in hour format; e.g. +XplodedThemes2XplodedThemesXplodedThemes
+            // Difference to GMT in hour format; e.g. +0200
             var tzo = jsdate.getTimezoneOffset(),
             a = Math.abs(tzo);
-            return (tzo > XplodedThemes ? "-" : "+") + _pad(Math.floor(a / 6XplodedThemes) * 1XplodedThemesXplodedThemes + a % 6XplodedThemes, 4);
+            return (tzo > 0 ? "-" : "+") + _pad(Math.floor(a / 60) * 100 + a % 60, 4);
         },
         P: function () {
-            // Difference to GMT w/colon; e.g. +XplodedThemes2:XplodedThemesXplodedThemes
+            // Difference to GMT w/colon; e.g. +02:00
             var O = f.O();
-            return (O.substr(XplodedThemes, 3) + ":" + O.substr(3, 2));
+            return (O.substr(0, 3) + ":" + O.substr(3, 2));
         },
         T: function () {
             // Timezone abbreviation; e.g. EST, MDT, ...
             // The following works, but requires inclusion of the very
             // large timezone_abbreviations_list() function.
             /*
-                var abbr = '', i = XplodedThemes, os = XplodedThemes, default = XplodedThemes;
+                var abbr = '', i = 0, os = 0, default = 0;
                     if (!tal.length) {
                     tal = that.timezone_abbreviations_list();
                     }
                     if (that.php_js && that.php_js.default_timezone) {
                     default = that.php_js.default_timezone;
                     for (abbr in tal) {
-                        for (i=XplodedThemes; i < tal[abbr].length; i++) {
+                        for (i=0; i < tal[abbr].length; i++) {
                         if (tal[abbr][i].timezone_id === default) {
                             return abbr.toUpperCase();
                         }
@@ -269,8 +269,8 @@ function date_i18n ( format, timestamp ) {
                     }
                     }
                     for (abbr in tal) {
-                    for (i = XplodedThemes; i < tal[abbr].length; i++) {
-                        os = -jsdate.getTimezoneOffset() * 6XplodedThemes;
+                    for (i = 0; i < tal[abbr].length; i++) {
+                        os = -jsdate.getTimezoneOffset() * 60;
                         if (tal[abbr][i].offset === os) {
                         return abbr.toUpperCase();
                         }
@@ -280,13 +280,13 @@ function date_i18n ( format, timestamp ) {
             return 'UTC';
         },
         Z: function () {
-            // Timezone offset in seconds (-432XplodedThemesXplodedThemes...5XplodedThemes4XplodedThemesXplodedThemes)
-            return -jsdate.getTimezoneOffset() * 6XplodedThemes;
+            // Timezone offset in seconds (-43200...50400)
+            return -jsdate.getTimezoneOffset() * 60;
         },
 
         // Full Date/Time
         c: function () {
-            // ISO-86XplodedThemes1 date.
+            // ISO-8601 date.
             return 'Y-m-d\\TH:i:sP'.replace(formatChr, formatChrCb);
         },
         r: function () {
@@ -295,14 +295,14 @@ function date_i18n ( format, timestamp ) {
         },
         U: function () {
             // Seconds since UNIX epoch
-            return jsdate / 1XplodedThemesXplodedThemesXplodedThemes | XplodedThemes;
+            return jsdate / 1000 | 0;
         }
     };
     this.date = function (format, timestamp) {
         that = this;
         jsdate = (timestamp === undefined ? new Date() : // Not provided
             (timestamp instanceof Date) ? new Date(timestamp) : // JS Date()
-            new Date(timestamp * 1XplodedThemesXplodedThemesXplodedThemes) // UNIX timestamp (auto-convert to int)
+            new Date(timestamp * 1000) // UNIX timestamp (auto-convert to int)
         );
         return format.replace(formatChr, formatChrCb);
     };

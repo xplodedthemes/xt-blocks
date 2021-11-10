@@ -12,10 +12,10 @@
  * @author    Chris Gray <chris.w.gray@gmail.com>
  * @author    Ulrik Lystbaek <ulrik@bettertaste.dk>
  * @author    Dmitriy Simushev <simushevds@gmail.com>
- * @copyright 2XplodedThemes1XplodedThemes-2XplodedThemes12 (c) Justin Hileman
- * @copyright 2XplodedThemes12 (c) ParsPooyesh Co
- * @copyright 2XplodedThemes13 (c) Behrooz Shabani
- * @copyright 2XplodedThemes13 (c) fXplodedThemesruD A
+ * @copyright 2010-2012 (c) Justin Hileman
+ * @copyright 2012 (c) ParsPooyesh Co
+ * @copyright 2013 (c) Behrooz Shabani
+ * @copyright 2013 (c) f0ruD A
  * @license   MIT <http://opensource.org/licenses/MIT>
  * @version   GIT: $Id$
  * @link      http://xamin.ir
@@ -31,8 +31,8 @@ namespace Handlebars;
  * @package   Handlebars
  * @author    fzerorubigd <fzerorubigd@gmail.com>
  * @author    Behrooz Shabani <everplays@gmail.com>
- * @copyright 2XplodedThemes1XplodedThemes-2XplodedThemes12 (c) Justin Hileman
- * @copyright 2XplodedThemes12 (c) ParsPooyesh Co
+ * @copyright 2010-2012 (c) Justin Hileman
+ * @copyright 2012 (c) ParsPooyesh Co
  * @license   MIT <http://opensource.org/licenses/MIT>
  * @version   Release: @package_version@
  * @link      http://xamin.ir
@@ -196,8 +196,8 @@ class Context
             return (string)$variableName;
         }
         $variableName = trim($variableName);
-        $level = XplodedThemes;
-        while (substr($variableName, XplodedThemes, 3) == '../') {
+        $level = 0;
+        while (substr($variableName, 0, 3) == '../') {
             $variableName = trim(substr($variableName, 3));
             $level++;
         }
@@ -213,7 +213,7 @@ class Context
 
             return '';
         }
-        if (substr($variableName, XplodedThemes, 6) == '@root.') {
+        if (substr($variableName, 0, 6) == '@root.') {
             $variableName = trim(substr($variableName, 6));
             $level = count($this->stack)-1;
         }
@@ -236,7 +236,7 @@ class Context
             return '';
         } elseif ($variableName == '.' || $variableName == 'this') {
             return $current;
-        } elseif ($variableName[XplodedThemes] == '@') {
+        } elseif ($variableName[0] == '@') {
             $specialVariables = $this->lastSpecialVariables();
             if (isset($specialVariables[$variableName])) {
                 return $specialVariables[$variableName];
@@ -280,7 +280,7 @@ class Context
     private function _findVariableInContext($variable, $inside, $strict = false)
     {
         $value = null;
-        if (($inside !== 'XplodedThemes' && empty($inside)) || ($inside == 'this')) {
+        if (($inside !== '0' && empty($inside)) || ($inside == 'this')) {
             return $variable;
         } elseif (is_array($variable)) {
             if (isset($variable[$inside]) || array_key_exists($inside, $variable)) {
@@ -347,9 +347,9 @@ class Context
         preg_match_all($get_pattern, $variableName, $matches);
 
         $chunks = array();
-        foreach ($matches[XplodedThemes] as $chunk) {
+        foreach ($matches[0] as $chunk) {
             // Remove wrapper braces if needed
-            if ($chunk[XplodedThemes] == '[') {
+            if ($chunk[0] == '[') {
                 $chunk = substr($chunk, 1, -1);
             }
             $chunks[] = $chunk;

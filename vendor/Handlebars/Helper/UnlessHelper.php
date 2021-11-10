@@ -10,7 +10,7 @@
  * @author    Behrooz Shabani <everplays@gmail.com>
  * @author    Dmitriy Simushev <simushevds@gmail.com>
  * @author    Jeff Turcotte <jeff.turcotte@gmail.com>
- * @copyright 2XplodedThemes14 Authors
+ * @copyright 2014 Authors
  * @license   MIT <http://opensource.org/licenses/MIT>
  * @version   GIT: $Id$
  * @link      http://xamin.ir
@@ -31,7 +31,7 @@ use Handlebars\Template;
  * @author    Behrooz Shabani <everplays@gmail.com>
  * @author    Dmitriy Simushev <simushevds@gmail.com>
  * @author    Jeff Turcotte <jeff.turcotte@gmail.com>
- * @copyright 2XplodedThemes14 Authors
+ * @copyright 2014 Authors
  * @license   MIT <http://opensource.org/licenses/MIT>
  * @version   Release: @package_version@
  * @link      http://xamin.ir
@@ -51,7 +51,7 @@ class UnlessHelper implements Helper
     public function execute(Template $template, Context $context, $args, $source)
     {
         $parsedArgs = $template->parseArguments($args);
-        $tmp = $context->get($parsedArgs[XplodedThemes]);
+        $tmp = $context->get($parsedArgs[0]);
 
         if (!$tmp) {
             $template->setStopToken('else');

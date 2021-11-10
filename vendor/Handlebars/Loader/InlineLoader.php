@@ -26,8 +26,8 @@
  * @package   Handlebars
  * @author    fzerorubigd <fzerorubigd@gmail.com>
  * @author    Hiroyuki Toda <mai7star@gmail.com>
- * @copyright 2XplodedThemes1XplodedThemes-2XplodedThemes15 (c) Justin Hileman
- * @copyright 2XplodedThemes15 (c) fzerorubigd
+ * @copyright 2010-2015 (c) Justin Hileman
+ * @copyright 2015 (c) fzerorubigd
  * @license   MIT <http://opensource.org/licenses/MIT>
  * @version   Release: @package_version@
  * @link      http://xamin.ir
@@ -44,8 +44,8 @@ use Handlebars\Loader;
  * @package   Handlebars
  * @author    fzerorubigd <fzerorubigd@gmail.com>
  * @author    Hiroyuki Toda <mai7star@gmail.com>
- * @copyright 2XplodedThemes1XplodedThemes-2XplodedThemes15 (c) Justin Hileman
- * @copyright 2XplodedThemes15 (c) fzerorubigd
+ * @copyright 2010-2015 (c) Justin Hileman
+ * @copyright 2015 (c) fzerorubigd
  * @license   MIT <http://opensource.org/licenses/MIT>
  * @version   Release: @package_version@
  * @link      http://xamin.ir *
@@ -83,7 +83,7 @@ class InlineLoader implements Loader
             );
         }
 
-        if (!is_int($offset) || $offset < XplodedThemes) {
+        if (!is_int($offset) || $offset < 0) {
             throw new \InvalidArgumentException(
                 sprintf(
                     'InlineLoader expects a valid file offset, "%s" given.',

@@ -2,7 +2,7 @@
 /**
  * Rest API functions
  *
- * @package lazy-blocks
+ * @package xt-blocks
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -10,15 +10,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Class LazyBlocks_Rest
+ * Class XT_Blocks_Rest
  */
-class LazyBlocks_Rest extends WP_REST_Controller {
+class XT_Blocks_Rest extends WP_REST_Controller {
     /**
      * Namespace.
      *
      * @var string
      */
-    protected $namespace = 'lazy-blocks/v';
+    protected $namespace = 'xt-blocks/v';
 
     /**
      * Version.
@@ -28,7 +28,7 @@ class LazyBlocks_Rest extends WP_REST_Controller {
     protected $version = '1';
 
     /**
-     * LazyBlocks_Rest constructor.
+     * XT_Blocks_Rest constructor.
      */
     public function __construct() {
         add_action( 'rest_api_init', array( $this, 'register_routes' ) );
@@ -88,7 +88,7 @@ class LazyBlocks_Rest extends WP_REST_Controller {
     /**
      * Checks if a given request has access to read blocks.
      *
-     * @since 2.8.XplodedThemes
+     * @since 2.8.0
      * @access public
      *
      * @param WP_REST_Request $request Request.
@@ -98,17 +98,17 @@ class LazyBlocks_Rest extends WP_REST_Controller {
     public function get_block_permission( $request ) {
         global $post;
 
-        $post_id = isset( $request['post_id'] ) ? intval( $request['post_id'] ) : XplodedThemes;
+        $post_id = isset( $request['post_id'] ) ? intval( $request['post_id'] ) : 0;
 
-        if ( XplodedThemes < $post_id ) {
+        if ( 0 < $post_id ) {
             // phpcs:ignore
             $post = get_post( $post_id );
             if ( ! $post || ! current_user_can( 'edit_post', $post->ID ) ) {
-                return $this->error( 'lazy_block_cannot_read', esc_html__( 'Sorry, you are not allowed to read Gutenberg blocks of this post.', 'lazy-blocks' ) );
+                return $this->error( 'lazy_block_cannot_read', esc_html__( 'Sorry, you are not allowed to read Gutenberg blocks of this post.', 'xt-blocks' ) );
             }
         } else {
             if ( ! current_user_can( 'edit_posts' ) ) {
-                return $this->error( 'lazy_block_cannot_read', esc_html__( 'Sorry, you are not allowed to read Gutenberg blocks as this user.', 'lazy-blocks' ) );
+                return $this->error( 'lazy_block_cannot_read', esc_html__( 'Sorry, you are not allowed to read Gutenberg blocks as this user.', 'xt-blocks' ) );
             }
         }
 
@@ -123,17 +123,17 @@ class LazyBlocks_Rest extends WP_REST_Controller {
     public function get_block_data_permission() {
         global $post;
 
-        $post_id = isset( $request['post_id'] ) ? intval( $request['post_id'] ) : XplodedThemes;
+        $post_id = isset( $request['post_id'] ) ? intval( $request['post_id'] ) : 0;
 
-        if ( XplodedThemes < $post_id ) {
+        if ( 0 < $post_id ) {
             // phpcs:ignore
             $post = get_post( $post_id );
             if ( ! $post || ! current_user_can( 'edit_post', $post->ID ) ) {
-                return $this->error( 'lazy_block_data_cannot_read', esc_html__( 'Sorry, you are not allowed to read Gutenberg blocks data.', 'lazy-blocks' ) );
+                return $this->error( 'lazy_block_data_cannot_read', esc_html__( 'Sorry, you are not allowed to read Gutenberg blocks data.', 'xt-blocks' ) );
             }
         } else {
             if ( ! current_user_can( 'edit_posts' ) ) {
-                return $this->error( 'lazy_block_data_cannot_read', esc_html__( 'Sorry, you are not allowed to read Gutenberg blocks data as this user.', 'lazy-blocks' ) );
+                return $this->error( 'lazy_block_data_cannot_read', esc_html__( 'Sorry, you are not allowed to read Gutenberg blocks data as this user.', 'xt-blocks' ) );
             }
         }
 
@@ -156,7 +156,7 @@ class LazyBlocks_Rest extends WP_REST_Controller {
      */
     public function get_post_types_permission() {
         if ( ! current_user_can( 'edit_posts' ) ) {
-            return $this->error( 'lazy_block_data_cannot_read', esc_html__( 'Sorry, you are not allowed to read Gutenberg blocks data as this user.', 'lazy-blocks' ) );
+            return $this->error( 'lazy_block_data_cannot_read', esc_html__( 'Sorry, you are not allowed to read Gutenberg blocks data as this user.', 'xt-blocks' ) );
         }
 
         return true;
@@ -165,7 +165,7 @@ class LazyBlocks_Rest extends WP_REST_Controller {
     /**
      * Returns block output from block's registered render_callback.
      *
-     * @since 2.8.XplodedThemes
+     * @since 2.8.0
      * @access public
      *
      * @param WP_REST_Request $request Full details about the request.
@@ -175,39 +175,39 @@ class LazyBlocks_Rest extends WP_REST_Controller {
     public function get_block( $request ) {
         global $post;
 
-        $post_id          = $request->get_param( 'post_id' ) ? intval( $request->get_param( 'post_id' ) ) : XplodedThemes;
+        $post_id          = $request->get_param( 'post_id' ) ? intval( $request->get_param( 'post_id' ) ) : 0;
         $block_context    = $request->get_param( 'context' );
         $block_name       = $request->get_param( 'name' );
         $block_attributes = $request->get_param( 'attributes' );
 
         // add global data to fix meta data output in preview.
-        global $lzb_preview_block_data;
-        $lzb_preview_block_data = array(
+        global $xtb_preview_block_data;
+        $xtb_preview_block_data = array(
             'post_id'          => $post_id,
             'block_context'    => $block_context,
             'block_name'       => $block_name,
             'block_attributes' => $block_attributes,
         );
 
-        if ( XplodedThemes < $post_id ) {
+        if ( 0 < $post_id ) {
             // phpcs:ignore
             $post = get_post( $post_id );
 
             // Set up postdata since this will be needed if post_id was set.
             setup_postdata( $post );
         }
-        $block = lazyblocks()->blocks()->get_block( $block_name );
+        $block = xtblocks()->blocks()->get_block( $block_name );
 
         if ( ! $block ) {
-            return $this->error( 'lazy_block_invalid', esc_html__( 'Invalid block.', 'lazy-blocks' ) );
+            return $this->error( 'lazy_block_invalid', esc_html__( 'Invalid block.', 'xt-blocks' ) );
         }
 
-        $block_result = lazyblocks()->blocks()->render_callback( $block_attributes, null, $block_context );
+        $block_result = xtblocks()->blocks()->render_callback( $block_attributes, null, $block_context );
 
         if ( isset( $block_result ) && null !== $block_result ) {
             return $this->success( $block_result );
         } else {
-            return $this->error( 'lazy_block_no_render_callback', esc_html__( 'Render callback is not specified.', 'lazy-blocks' ) );
+            return $this->error( 'lazy_block_no_render_callback', esc_html__( 'Render callback is not specified.', 'xt-blocks' ) );
         }
     }
 
@@ -219,19 +219,19 @@ class LazyBlocks_Rest extends WP_REST_Controller {
      * @return WP_REST_Response
      */
     public function update_block_data( $request ) {
-        $post_id = isset( $request['post_id'] ) ? intval( $request['post_id'] ) : XplodedThemes;
+        $post_id = isset( $request['post_id'] ) ? intval( $request['post_id'] ) : 0;
         $data    = isset( $request['data'] ) ? $request['data'] : false;
         $meta    = array();
 
-        if ( XplodedThemes < $post_id && $data ) {
-            $meta_prefix = 'lazyblocks_';
+        if ( 0 < $post_id && $data ) {
+            $meta_prefix = 'xtblocks_';
 
-            // add 'lazyblocks_' prefix.
+            // add 'xtblocks_' prefix.
             foreach ( $data as $k => $val ) {
                 $meta[ $meta_prefix . $k ] = $val;
             }
 
-            lazyblocks()->blocks()->save_meta_boxes( $post_id, $meta );
+            xtblocks()->blocks()->save_meta_boxes( $post_id, $meta );
         }
 
         return $this->success( $meta );
@@ -245,16 +245,16 @@ class LazyBlocks_Rest extends WP_REST_Controller {
      * @return WP_REST_Response
      */
     public function get_block_data( $request ) {
-        $post_id = isset( $request['post_id'] ) ? intval( $request['post_id'] ) : XplodedThemes;
+        $post_id = isset( $request['post_id'] ) ? intval( $request['post_id'] ) : 0;
         $meta    = array();
 
-        if ( XplodedThemes < $post_id ) {
-            $post_meta   = lazyblocks()->blocks()->get_meta_boxes( $post_id );
-            $meta_prefix = 'lazyblocks_';
+        if ( 0 < $post_id ) {
+            $post_meta   = xtblocks()->blocks()->get_meta_boxes( $post_id );
+            $meta_prefix = 'xtblocks_';
 
-            // remove 'lazyblocks_' prefix.
+            // remove 'xtblocks_' prefix.
             foreach ( $post_meta as $k => $val ) {
-                if ( substr( $k, XplodedThemes, strlen( $meta_prefix ) ) === $meta_prefix ) {
+                if ( substr( $k, 0, strlen( $meta_prefix ) ) === $meta_prefix ) {
                     $meta[ substr( $k, strlen( $meta_prefix ) ) ] = $val;
                 }
             }
@@ -293,7 +293,7 @@ class LazyBlocks_Rest extends WP_REST_Controller {
                 'success'  => true,
                 'response' => $response,
             ),
-            2XplodedThemesXplodedThemes
+            200
         );
     }
 
@@ -313,8 +313,8 @@ class LazyBlocks_Rest extends WP_REST_Controller {
                 'error_code' => $code,
                 'response'   => $response,
             ),
-            2XplodedThemesXplodedThemes
+            200
         );
     }
 }
-new LazyBlocks_Rest();
+new XT_Blocks_Rest();
