@@ -1,4 +1,4 @@
-# Custom Blocks Constructor - XT Blocks
+# XT Blocks Builder for WordPress
 
 * Contributors: nko
 * Tags: gutenberg, blocks, custom, meta, fields
